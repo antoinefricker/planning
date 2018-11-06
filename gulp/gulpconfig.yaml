@@ -1,0 +1,70 @@
+ENV:
+
+   version: '2.0.0'
+
+
+CONFIG:
+
+   path:
+      dest: '../dist/'
+
+   browserSync:
+      server:
+         baseDir: "../dist/"
+
+   assets:
+      watch:
+         - '../assets/*.*'
+         - '../assets/**/*.*'
+         # don't export sources files
+         - '!../assets/**/*.src.*'
+         - '!../assets/*.src.*'
+         # don't export info files
+         - '!../assets/**/*.nfo.*'
+         - '!../assets/*.nfo.*'
+      dest:
+         - ''
+
+
+   js:
+      watch:
+         - '../src/js/**/*.*'
+         - '../src/js/*.*'
+      target: 'js/'
+
+      files:
+         -  name: 'bundle'
+            enabled: true
+            concat:
+               - '../src/js/tippy.js'
+               - '../src/js/UIPlanning.js'
+            into: 'bundle.js'
+
+
+   sass:
+      watch:
+         - '../src/sass/**/*.{scss, css}'
+         - '../src/sass/*.{scss, css}'
+         # don't mind raw dynamic files
+         - '!../src/sass/**/*.dyn.*'
+         - '!../src/sass/*.dyn.*'
+         # don't mind info files
+         - '!../src/sass/**/*.nfo.*'
+         - '!../src/sass/*.nfo.*'
+
+      csso:
+         restructure: true
+         sourceMap: true
+         debug: false
+
+      autoprefixer:
+         browsers:
+            - 'last 2 versions'
+
+      themes:
+         -  name: 'default'
+            enabled: true
+            entry: '../src/sass/main.scss'
+            target: 'css/'
+            includePaths:
+               - '../src/sass/'

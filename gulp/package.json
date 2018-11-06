@@ -1,0 +1,28 @@
+{
+    "name": "globalvisio-interface",
+    "version": "2.0.0",
+    "description": "Development workflow for Globalvisio web application interface",
+    "main": "gulpfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "easy-live <n.gyss@easy-live.fr>",
+    "license": "all rights reserved © easy-live.fr",
+    "devDependencies": {
+        "browser-sync": "^2.24.7",
+        "gulp": "^4.0.0",
+        "gulp-autoprefixer": "^6.0.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-csso": "^3.0.1",
+        "gulp-if": "^2.0.2",
+        "gulp-rename": "^1.4.0",
+        "gulp-sass": "^4.0.1",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-uglify": "^3.0.1",
+        "js-yaml": "^3.12.0"
+    },
+    "dependencies": {
+        "npm": "^6.4.1"
+    },
+    "keywords": []
+}

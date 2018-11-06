@@ -1,0 +1,228 @@
+$gutter: 12px;
+$uicomp-bd-radius: 2px;
+
+
+body{
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight:400;
+	font-style: normal;
+	font-size: 14px;
+}
+
+.gv-planning {
+	$border-radius: 8px;
+	$day-height: 30px;
+	$hours-parts-height: 16px;
+	$range-hmargin: 2px;
+	$range-vmargin: 2px;
+
+	& > div{
+		box-sizing: border-box;
+	}
+
+	position: relative;
+
+	.uiplanning__range{
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+
+		display: block;
+		height: 50%;
+
+		@extend %no-select;
+		pointer-events: none;
+		cursor: pointer;
+
+		background-color: rgba(red, .2);
+		.uiplanning__range-tooltip{
+			position: absolute;
+			top: -50%;
+			left: 50%;
+			transform: translate(-50%, -100%);
+
+			display: none;
+		}
+		&.show-tooltip{
+			background-color: rgba(red, .8);
+			.uiplanning__range-tooltip{
+				display: block;
+			}
+		}
+	}
+
+	%planning-row {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		width: 100%;
+	}
+	%uiplanning {
+		flex: 1 1 100px;
+	}
+	%no-select {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	.planning-feedback{
+		border: 1px solid lightgrey;
+		padding: $gutter;
+		margin: $gutter 0;
+	}
+	.planning-controls{
+		$state-selector-bullet-size: 12px;
+
+		border: 1px solid lightgrey;
+		padding: $gutter;
+
+		.planning-state-selector{
+			position: relative;
+
+			display: inline-block;
+			padding: (.5 * $gutter) (.5 * $gutter) (.5 * $gutter) ($state-selector-bullet-size + $gutter);
+			margin-left: $gutter;
+
+			border-radius: 2px;
+			border: 1px solid lightgrey;
+
+			cursor: pointer;
+			@extend %no-select;
+
+			&.active{
+				background-color: lightgrey;
+			}
+
+			.bullet{
+				position: absolute;
+				top: 50%;
+				left: (.5 * $gutter);
+				transform: translateY(-50%);
+
+				content: '';
+				width: $state-selector-bullet-size;
+				height: $state-selector-bullet-size;
+				border: 1px lightgrey solid;
+				border-radius: $uicomp-bd-radius;
+
+				pointer-events: none;
+			}
+		}
+	}
+	.planning-container{
+		border: 1px solid lightgrey;
+		border-bottom: none;
+	}
+
+	// --- rows
+	.uiplanning-row__hours{
+		@extend %planning-row;
+
+		height: $day-height;
+		line-height: $day-height;
+		border-bottom: 1px solid lightgrey;
+	}
+	.uiplanning-row__hour-parts{
+		@extend %planning-row;
+
+		height: $hours-parts-height;
+		line-height: $hours-parts-height;
+		border-bottom: 1px solid lightgrey;
+	}
+	.uiplanning-row__day {
+		@extend %planning-row;
+
+		height: $day-height;
+		line-height: $day-height;
+	}
+
+
+	// --- cells
+
+	.uiplanning__hour, .uiplanning__hour-part {
+		@extend %uiplanning;
+		@extend %no-select;
+		text-align: center;
+		cursor: pointer;
+	}
+	.uiplanning__day{
+		@extend %no-select;
+	}
+	.uiplanning__block {
+		@extend %uiplanning;
+		position: relative;
+
+		&:before {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-1px, -1px);
+
+			display: block;
+			content: '';
+			height: 1px;
+			width: 1px;
+
+			border-radius: 50%;
+			background-color: rgba(black, .3);
+		}
+
+		&.uiplanning--target-hover{
+			&:after {
+				position: absolute;
+				z-index: 10;
+				width: 100%;
+				height: 100%;
+
+				display: block;
+				content: '';
+
+				background-color: rgba(black, .05);
+			}
+		}
+
+		.uiplanning__block-content{
+			pointer-events: none;
+			position: absolute;
+			width: 100%;
+			height: calc(100% - (2 * #{$range-vmargin}));
+			top: $range-vmargin;
+			left: 0;
+
+		}
+		&.uiplanning__block--border-left {
+			.uiplanning__block-content{
+				left: $range-hmargin;
+				width: calc(100% - #{$range-hmargin});
+				border-bottom-left-radius: $border-radius;
+				border-top-left-radius: $border-radius;
+			}
+		}
+		&.uiplanning__block--border-right {
+			.uiplanning__block-content {
+				width: calc(100% - #{$range-hmargin});
+				border-bottom-right-radius: $border-radius;
+				border-top-right-radius: $border-radius;
+			}
+		}
+		&.uiplanning__block--border-left.uiplanning__block--border-right{
+			.uiplanning__block-content {
+				width: calc(100% - (2 * #{$range-hmargin}));
+			}
+		}
+	}
+
+	.uiplanning--hour-start{
+		border-left: 1px solid lightgrey;
+	}
+
+	.uiplanning-row > div:first-child{
+		flex: 0 0 100px;
+		padding: 0 4px;
+	}
+}
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+	<title>UI Planning</title>
+
+	<script src="jquery-3.3.1.js"></script>
+	<script src="js/bundle.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,500,700&amp;amp;subset=latin-ext" />
+	<link href="css/default.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="planning">
+
+	<div class="planning-container"></div>
+
+	<div class="planning-feedback"></div>
+
+	<div class="planning-controls">
+
+		<label class="controls-info">Sélectionnez un état pour éditer le planning</label>
+		<span class="controls-selectors"></span>
+		<br />
+
+		<button id="planning-restore" class="btn uicomp-red">Restaurer</button>
+		<button id="planning-export" class="btn uicomp-green">Exporter</button>
+	</div>
+</div>
+
+<script>
+
+
+
+	new UIPlanning('#planning', {
+		states: [
+			{
+				uid: '',
+				label: 'inoccupation',
+				color: '#fff'
+			},
+			{
+				uid: 'occupation',
+				label: 'occupation',
+				color: '#3E9DBE'
+			},
+			{
+				uid: 'vacances',
+				label: 'vacances',
+				color: '#41c354'
+			}
+		],
+		stateDefault: '',
+		planning: [[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"20:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}]],
+	});
+</script>
+
+</body>
+</html>
