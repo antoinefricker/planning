@@ -4,6 +4,11 @@
     <list default="true" id="9be7a2f5-01e0-47d1-b1ea-14a089a7348a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/css/default.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/css/default.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/js/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/js/map/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/map/bundle.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/js/sources/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/sources/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/UIPlanning.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/UIPlanning.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sass/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/main.scss" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,6 +33,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="css" value="7" />
+          <entry key="gitignore" value="2" />
           <entry key="html" value="4" />
           <entry key="js" value="14" />
           <entry key="scss" value="6" />
@@ -40,6 +46,7 @@
           <entry key="CSS" value="7" />
           <entry key="HTML" value="4" />
           <entry key="JavaScript" value="14" />
+          <entry key="PLAIN_TEXT" value="2" />
           <entry key="SCSS" value="6" />
           <entry key="TypeScript" value="1" />
           <entry key="YAML" value="6" />
@@ -48,18 +55,20 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="6" />
-          <entry key="html" value="847" />
-          <entry key="js" value="12607" />
-          <entry key="scss" value="3391" />
+          <entry key="gitignore" value="2" />
+          <entry key="html" value="926" />
+          <entry key="js" value="12760" />
+          <entry key="scss" value="3643" />
           <entry key="yaml" value="71" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="6" />
-          <entry key="HTML" value="847" />
-          <entry key="JavaScript" value="12607" />
-          <entry key="SCSS" value="3391" />
+          <entry key="HTML" value="926" />
+          <entry key="JavaScript" value="12760" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="SCSS" value="3643" />
           <entry key="YAML" value="71" />
         </counts>
       </usages-collector>
@@ -67,23 +76,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="219" column="9" selection-start-line="219" selection-start-column="9" selection-end-line="219" selection-end-column="9" />
+            <state relative-caret-position="232">
+              <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sass/main.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="179" column="4" selection-start-line="179" selection-start-column="4" selection-end-line="179" selection-end-column="4" />
+            <state relative-caret-position="249">
+              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
               <folding>
+                <element signature="e#412#548#0" />
+                <element signature="e#291#321#0" />
+                <element signature="e#1533#1609#0" />
+                <element signature="e#2413#2471#0" />
+                <element signature="e#2407#2487#0" />
+                <element signature="e#2506#2529#0" />
+                <element signature="e#2509#2628#0" />
+                <element signature="e#2657#2792#0" />
+                <element signature="e#2815#2896#0" />
+                <element signature="e#2957#3047#0" />
                 <element signature="e#3065#3091#0" />
                 <element signature="e#3112#4398#0" />
+                <element signature="e#3025#3066#0" />
+                <element signature="e#3094#3128#0" />
+                <element signature="e#3156#3193#0" />
+                <element signature="e#3010#3878#0" />
               </folding>
             </state>
           </provider>
@@ -92,8 +118,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" column="77" selection-start-line="29" selection-start-column="77" selection-end-line="29" selection-end-column="77" />
+            <state relative-caret-position="524">
+              <caret line="56" column="16" selection-start-line="56" selection-start-column="7" selection-end-line="56" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -111,10 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>planning-cell</find>
-      <find>uiplanning__date</find>
-      <find>uiplanning-row__hours</find>
-      <find>parts</find>
       <find>date</find>
       <find>start</find>
       <find>uiplanning__day</find>
@@ -138,6 +160,13 @@
       <find>console.log(</find>
       <find>tippy(</find>
       <find>tippy</find>
+      <find>mouseup</find>
+      <find>hour-start</find>
+      <find>1px solid lightgrey</find>
+      <find>%uiplanning</find>
+      <find>uiplanning__block-content</find>
+      <find>planning-controls</find>
+      <find>#</find>
     </findStrings>
     <replaceStrings>
       <replace>uiplanning-row</replace>
@@ -151,6 +180,8 @@
       <replace>vacances</replace>
       <replace>day</replace>
       <replace>model_retrieveRanges</replace>
+      <replace>$border-inner</replace>
+      <replace>%uiplanning-cell</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -168,10 +199,11 @@
         <option value="$PROJECT_DIR$/dist/js/jquery-3.3.1.js" />
         <option value="$PROJECT_DIR$/_sources/tooltipster-master/tooltipster-master/dist/css/tooltipster-sideTip-light.min.css" />
         <option value="$PROJECT_DIR$/src/js/tippy.js" />
+        <option value="$PROJECT_DIR$/gulp/gulpconfig.yaml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/sass/main.scss" />
         <option value="$PROJECT_DIR$/dist/index.html" />
         <option value="$PROJECT_DIR$/src/js/UIPlanning.js" />
-        <option value="$PROJECT_DIR$/gulp/gulpconfig.yaml" />
-        <option value="$PROJECT_DIR$/src/sass/main.scss" />
       </list>
     </option>
   </component>
@@ -357,23 +389,23 @@
       <workItem from="1541431975107" duration="6190000" />
       <workItem from="1541492470783" duration="23104000" />
       <workItem from="1541580042931" duration="511000" />
-      <workItem from="1541584240991" duration="234000" />
+      <workItem from="1541584240991" duration="3082000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66553000" />
+    <option name="totallyTimeSpent" value="69401000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1216" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4951724" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4951724" visible="true" weight="0.25" />
       <window_info id="Gulp" order="1" sideWeight="0.50482756" side_tool="true" visible="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32994455" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32994455" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -448,20 +480,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sass/tippy/tippy.scss" />
-    <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="219" column="9" selection-start-line="219" selection-start-column="9" selection-end-line="219" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="77" selection-start-line="29" selection-start-column="77" selection-end-line="29" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gulp/gulpconfig.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -471,11 +489,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sass/main.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="179" column="4" selection-start-line="179" selection-start-column="4" selection-end-line="179" selection-end-column="4" />
+        <state relative-caret-position="249">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
           <folding>
+            <element signature="e#412#548#0" />
+            <element signature="e#291#321#0" />
+            <element signature="e#1533#1609#0" />
+            <element signature="e#2413#2471#0" />
+            <element signature="e#2407#2487#0" />
+            <element signature="e#2506#2529#0" />
+            <element signature="e#2509#2628#0" />
+            <element signature="e#2657#2792#0" />
+            <element signature="e#2815#2896#0" />
+            <element signature="e#2957#3047#0" />
             <element signature="e#3065#3091#0" />
             <element signature="e#3112#4398#0" />
+            <element signature="e#3025#3066#0" />
+            <element signature="e#3094#3128#0" />
+            <element signature="e#3156#3193#0" />
+            <element signature="e#3010#3878#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="524">
+          <caret line="56" column="16" selection-start-line="56" selection-start-column="7" selection-end-line="56" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
