@@ -162,6 +162,10 @@ body{
 
 		height: $day-height;
 		line-height: $day-height;
+
+		&:last-of-type{
+			border-bottom: 1px solid lightgrey;
+		}
 	}
 
 
@@ -172,6 +176,7 @@ body{
 		@extend %no-select;
 		text-align: center;
 		cursor: pointer;
+		border-left: 1px solid lightgrey;
 	}
 	.uiplanning__day{
 		@extend %no-select;
@@ -240,10 +245,10 @@ body{
 		}
 	}
 
+
 	.uiplanning--hour-start{
 		border-left: 1px solid lightgrey;
 	}
-
 	.uiplanning-row > div:first-child{
 		flex: 0 0 100px;
 		padding: 0 4px;

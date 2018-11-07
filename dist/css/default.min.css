@@ -98,9 +98,12 @@ body {
   .gv-planning .uiplanning-row__day {
     height: 30px;
     line-height: 30px; }
+    .gv-planning .uiplanning-row__day:last-of-type {
+      border-bottom: 1px solid lightgrey; }
   .gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part {
     text-align: center;
-    cursor: pointer; }
+    cursor: pointer;
+    border-left: 1px solid lightgrey; }
   .gv-planning .uiplanning__block {
     position: relative; }
     .gv-planning .uiplanning__block:before {
