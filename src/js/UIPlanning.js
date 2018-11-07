@@ -15,7 +15,6 @@ var GVPlanning = function (selector, options) {
 		stateSelectedDefault: null,
 	}, options);
 
-	console.log(this._o.stateDefault, typeof this._o.stateDefault);
 	if(this._o.stateDefault == null)
 		this._o.stateDefault = this._o.states[0];
 	else if(typeof this._o.stateDefault == 'string')
@@ -92,7 +91,7 @@ var GVPlanning = function (selector, options) {
 };
 var p = GVPlanning.prototype;
 
-p.ux_error = function (message, level) {
+p.ux_error = function (message, type) {
 	if(this._o.feedbackCallback){
 		this._o.feedbackCallback(message, level);
 	}
@@ -100,7 +99,7 @@ p.ux_error = function (message, level) {
 };
 p.ux_blockStateWatch = function (e) {
 	if (!this._state) {
-		this.ux_error('no-state-selected');
+		this.ux_error('no-state-selected', 'info');
 		return;
 	}
 	if (e.button && e.button === 2) {
@@ -118,6 +117,9 @@ p.ux_blockStateWatch = function (e) {
 		this.ux_blockState(e);
 	}
 	else{
+		// ckec for state restoration
+		if(this._dragStatus.state)
+			this.model_setState(this._dragStatus.state);
 		// release drag lock
 		this._dragStatus = null;
 
@@ -130,10 +132,10 @@ p.ux_blockStateWatch = function (e) {
 	}
 };
 p.ux_blockState = function (e) {
-	var block, row, xBlock, yBlock, selBlocks, min, max;
+	var block, blockState, row, xBlock, yBlock, selBlocks, min, max;
 
 	if (!this._state) {
-		this.ux_error('no-state-selected');
+		this.ux_error('no-state-selected', 'info');
 		return;
 	}
 
@@ -146,8 +148,12 @@ p.ux_blockState = function (e) {
 		this._dragStatus = {
 			x: xBlock,
 			y: yBlock,
-			state: block.attr('data-state') === this._state.uid ? this._o.stateDefault : this._state
 		};
+		blockState = block.attr('data-state');
+		if(blockState === this._state.uid){
+			this.model_setState(this._o.stateDefault.uid);
+			this._dragStatus.state = blockState;
+		}
 	}
 	else if(yBlock != this._dragStatus.y){
 		return;
@@ -162,7 +168,7 @@ p.ux_blockState = function (e) {
 		max = this._dragStatus.x;
 	}
 	selBlocks = this._cellsByDay[yBlock].slice(min, max + 1);
-	this.dom_setBlocksState(selBlocks, this._dragStatus.state);
+	this.dom_setBlocksState(selBlocks, this._state);
 };
 p.ux_unsetHover = function () {
 	this._cellsAll.removeClass('gvp--target-hover');
@@ -176,7 +182,7 @@ p.ux_rowHover = function (e) {
 };
 p.ux_rowState = function (e) {
 	if (!this._state) {
-		this.ux_error('no-state-selected');
+		this.ux_error('no-state-selected', 'info');
 		return;
 	}
 	this.dom_setBlocksState(this.ux_rowSelect(e), this._state);
@@ -237,7 +243,7 @@ p.ux_colHover = function (e) {
 };
 p.ux_colState = function (e) {
 	if (!this._state) {
-		this.ux_error('no-state-selected');
+		this.ux_error('no-state-selected', 'info');
 		return;
 	}
 	this.dom_setBlocksState(this.ux_colSelect(e), this._state);
@@ -245,7 +251,7 @@ p.ux_colState = function (e) {
 
 p.dom_setBlocksState = function (blocks, state) {
 	if (!blocks || blocks.length === 0) {
-		this.ux_error('no-target');
+		console.log('[dom_setBlocksState] no target');
 		return;
 	}
 

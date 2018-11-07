@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9be7a2f5-01e0-47d1-b1ea-14a089a7348a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/css/default.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/css/default.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/js/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/js/map/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/map/bundle.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/js/sources/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/sources/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/UIPlanning.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/UIPlanning.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/main.scss" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +53,7 @@
           <entry key="css" value="6" />
           <entry key="gitignore" value="4" />
           <entry key="html" value="958" />
-          <entry key="js" value="15607" />
+          <entry key="js" value="15791" />
           <entry key="scss" value="4302" />
           <entry key="yaml" value="71" />
         </counts>
@@ -66,7 +62,7 @@
         <counts>
           <entry key="CSS" value="6" />
           <entry key="HTML" value="958" />
-          <entry key="JavaScript" value="15607" />
+          <entry key="JavaScript" value="15791" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="SCSS" value="4302" />
           <entry key="YAML" value="71" />
@@ -79,9 +75,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="64" column="64" lean-forward="true" selection-start-line="64" selection-start-column="64" selection-end-line="64" selection-end-column="64" />
+            <state relative-caret-position="62">
+              <caret line="121" column="51" selection-start-line="121" selection-start-column="51" selection-end-line="121" selection-end-column="51" />
               <folding>
+                <element signature="e#46#2536#0" />
+                <element signature="e#2608#2731#0" />
                 <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="e#12411#12584#0" />
                 <element signature="e#13741#13943#0" />
@@ -137,7 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>hour-start</find>
       <find>1px solid lightgrey</find>
       <find>%uiplanning</find>
       <find>uiplanning__block-content</find>
@@ -167,6 +164,7 @@
       <find>_cellbyDay</find>
       <find>gvp-state-selector</find>
       <find>_dragStartCell</find>
+      <find>ux_error</find>
     </findStrings>
     <replaceStrings>
       <replace>uiplanning-row</replace>
@@ -403,12 +401,12 @@
       <workItem from="1541431975107" duration="6190000" />
       <workItem from="1541492470783" duration="23104000" />
       <workItem from="1541580042931" duration="511000" />
-      <workItem from="1541584240991" duration="23426000" />
+      <workItem from="1541584240991" duration="24176000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89745000" />
+    <option name="totallyTimeSpent" value="90495000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1216" extended-state="6" />
@@ -539,9 +537,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="64" column="64" lean-forward="true" selection-start-line="64" selection-start-column="64" selection-end-line="64" selection-end-column="64" />
+        <state relative-caret-position="62">
+          <caret line="121" column="51" selection-start-line="121" selection-start-column="51" selection-end-line="121" selection-end-column="51" />
           <folding>
+            <element signature="e#46#2536#0" />
+            <element signature="e#2608#2731#0" />
             <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
             <element signature="e#12411#12584#0" />
             <element signature="e#13741#13943#0" />
