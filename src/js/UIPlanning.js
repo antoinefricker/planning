@@ -104,14 +104,14 @@ UIPlanning.prototype.ux_blockStateMouseState = function (e) {
 
 	if (e.type === 'mousedown') {
 		this._containerEl.on('mouseenter', '.uiplanning__block', this._callbacks.ux_blockState);
-		$(document).on('mouseup', this._callbacks.ux_blockStateMouseState);
+		$(document).on('mouseup dragend', this._callbacks.ux_blockStateMouseState);
 		if ($(e.target).is('.uiplanning__block')) {
 			this.ux_blockState(e);
 		}
 	}
 	else if (e.type === 'mouseup') {
 		this._containerEl.off('mouseenter', '.uiplanning__block', this._callbacks.ux_blockState);
-		$(document).off('mouseup', this._callbacks.ux_blockStateMouseState);
+		$(document).off('mouseup dragend', this._callbacks.ux_blockStateMouseState);
 	}
 };
 UIPlanning.prototype.ux_blockState = function (e) {
