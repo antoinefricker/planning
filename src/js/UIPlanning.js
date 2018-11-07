@@ -15,9 +15,10 @@ var GVPlanning = function (selector, options) {
 		stateSelectedDefault: null,
 	}, options);
 
-	if(!this._o.stateDefault)
+	console.log(this._o.stateDefault, typeof this._o.stateDefault);
+	if(this._o.stateDefault == null)
 		this._o.stateDefault = this._o.states[0];
-	else if(typeof this._o.stateDefault === 'string')
+	else if(typeof this._o.stateDefault == 'string')
 		this._o.stateDefault = this.model_getState(this._o.stateDefault);
 
 
@@ -26,6 +27,7 @@ var GVPlanning = function (selector, options) {
 	this._cbs = {
 		model_setState: this.model_setState.bind(this),
 		ux_unsetHover: this.ux_unsetHover.bind(this),
+		ux_colStateWatch: this.ux_colStateWatch.bind(this),
 		ux_colState: this.ux_colState.bind(this),
 		ux_colHover: this.ux_colHover.bind(this),
 		ux_rowState: this.ux_rowState.bind(this),
@@ -39,7 +41,7 @@ var GVPlanning = function (selector, options) {
 	// allow developper to lock rendering during extensive update processes
 	this._rangesRenderLock = false;
 	// while dragging to "paint" in block-type cells, store the position of the drag start position
-	this._dragStartCell = null;
+	this._dragStatus = null;
 	// store all ranges settings
 	this._planning = {
 		ranges: [],
@@ -48,53 +50,48 @@ var GVPlanning = function (selector, options) {
 	
 	// ########################################## INIT INSTANCE
 
-	this._domEl = $(selector)
-		.addClass('gvp');
+	this._domEl = $(selector).addClass('gvp');
 	this._containerEl = this._domEl.find('.gvp-container');
 	this._controlsEl = this._domEl.find('.gvp-controls');
 
 	this.dom_build();
 
-	this.ux_interactions();
+	this._containerEl
+		// --- complete day
+		.on('click', '.gvp__day', this._cbs.ux_rowState)
+		.on('mouseover', '.gvp__day', this._cbs.ux_rowHover)
+		.on('mouseleave', '.gvp__day', this._cbs.ux_unsetHover)
+		// ---	complete hour
+		.on('mousedown', '.gvp__hour', this._cbs.ux_colStateWatch)
+		.on('mouseover', '.gvp__hour', this._cbs.ux_colHover)
+		.on('mouseleave', '.gvp__hour', this._cbs.ux_unsetHover)
+		// ---	hour part
+		.on('mousedown', '.gvp__hour-part', this._cbs.ux_colStateWatch)
+		.on('mouseover', '.gvp__hour-part', this._cbs.ux_colHover)
+		.on('mouseleave', '.gvp__hour-part', this._cbs.ux_unsetHover)
+		// --- element
+		.on('mousedown', '.gvp__block', this._cbs.ux_blockStateWatch)
+	;
+
+	this._domEl.on('dragstart', function(e){
+		e.preventDefault();
+		return false;
+	});
+	this._controlsEl
+		.on('click', '.gvp-state-selector', this._cbs.model_setState)
+	;
 
 
 	// --- if a configuration is set ==> display it
-	if (this._o.planning) {
+	if (this._o.planning){
 		this.model_restore();
 	}
-	if (this._o.stateSelectedDefault) {
+	if (this._o.stateSelectedDefault){
 		this.model_setState(this._o.stateSelectedDefault);
 	}
 };
 var p = GVPlanning.prototype;
 
-
-p.ux_interactions = function () {
-	this._containerEl
-
-	// --- complete day
-		.on('click', '.gvp__day', this._cbs.ux_rowState)
-		.on('mouseover', '.gvp__day', this._cbs.ux_rowHover)
-		.on('mouseleave', '.gvp__day', this._cbs.ux_unsetHover)
-
-		// ---	complete hour
-		.on('click', '.gvp__hour', this._cbs.ux_colState)
-		.on('mouseover', '.gvp__hour', this._cbs.ux_colHover)
-		.on('mouseleave', '.gvp__hour', this._cbs.ux_unsetHover)
-
-		// ---	hour part
-		.on('click', '.gvp__hour-part', this._cbs.ux_colState)
-		.on('mouseover', '.gvp__hour-part', this._cbs.ux_colHover)
-		.on('mouseleave', '.gvp__hour-part', this._cbs.ux_unsetHover)
-
-		// --- element
-		.on('mousedown', '.gvp__block', this._cbs.ux_blockStateWatch)
-	;
-
-	this._controlsEl
-		.on('click', '.gvp-state-selector', this._cbs.model_setState)
-	;
-};
 p.ux_error = function (message, level) {
 	if(this._o.feedbackCallback){
 		this._o.feedbackCallback(message, level);
@@ -122,7 +119,7 @@ p.ux_blockStateWatch = function (e) {
 	}
 	else{
 		// release drag lock
-		this._dragStartCell = null;
+		this._dragStatus = null;
 
 		this._containerEl
 			.off('mouseover', '.gvp__block', this._cbs.ux_blockState);
@@ -145,26 +142,27 @@ p.ux_blockState = function (e) {
 	xBlock = row.find('.gvp__block').index(block);
 	yBlock = parseInt(row.attr('data-day-index'));
 
-	if(!this._dragStartCell){
-		this._dragStartCell = {
+	if(!this._dragStatus){
+		this._dragStatus = {
 			x: xBlock,
-			y: yBlock
+			y: yBlock,
+			state: block.attr('data-state') === this._state.uid ? this._o.stateDefault : this._state
 		};
 	}
-	else if(yBlock != this._dragStartCell.y){
+	else if(yBlock != this._dragStatus.y){
 		return;
 	}
 
-	if(xBlock > this._dragStartCell.x){
-		min = this._dragStartCell.x;
+	if(xBlock > this._dragStatus.x){
+		min = this._dragStatus.x;
 		max = xBlock;
 	}
 	else{
 		min = xBlock;
-		max = this._dragStartCell.x;
+		max = this._dragStatus.x;
 	}
 	selBlocks = this._cellsByDay[yBlock].slice(min, max + 1);
-	this.dom_setBlocksState(selBlocks, this._state);
+	this.dom_setBlocksState(selBlocks, this._dragStatus.state);
 };
 p.ux_unsetHover = function () {
 	this._cellsAll.removeClass('gvp--target-hover');
@@ -183,11 +181,39 @@ p.ux_rowState = function (e) {
 	}
 	this.dom_setBlocksState(this.ux_rowSelect(e), this._state);
 };
+
+p.ux_colStateWatch = function (e) {
+	var el = $(e.target),
+		index,
+		selectors;
+
+	if (e.type === 'mousedown') {
+		this._containerEl
+			.on('mouseover', '.gvp__hour', this._cbs.ux_colState)
+			.on('mouseover', '.gvp__hour-part', this._cbs.ux_colState)
+		;
+		$(document)
+			.on('mouseup', this._cbs.ux_colStateWatch);
+		$(window)
+			.on('mouseup', this._cbs.ux_colStateWatch);
+		this.ux_colState(e);
+	}
+	else{
+		this._containerEl
+			.off('mouseover', '.gvp__hour', this._cbs.ux_colState)
+			.off('mouseover', '.gvp__hour-part', this._cbs.ux_colState)
+		;
+		$(document)
+			.off('mouseup', this._cbs.ux_colStateWatch);
+		$(window)
+			.off('mouseup', this._cbs.ux_colStateWatch);
+	}
+}
 p.ux_colSelect = function (e) {
 	var el = $(e.target), index, selectors;
 
 	// ---	complete hour
-	if (el.is('.gvp__hour')) {
+	if (el.hasClass('gvp__hour')) {
 		index = el.closest('.gvp-row').find('.gvp__hour').index(el);
 		selectors = [];
 		for (var i = index * this._o.hourParts, iLen = i + this._o.hourParts; i < iLen; ++i) {
@@ -196,11 +222,14 @@ p.ux_colSelect = function (e) {
 		return $('.gvp-row__day').find(selectors.join(', '));
 	}
 	// ---	hour parts
-	else if (el.is('.gvp__hour-part')) {
+	else if (el.hasClass('gvp__hour-part')) {
 		index = el.closest('.gvp-row').find('.gvp__hour-part').index(el);
 		return $('.gvp-row__day').find('.gvp__block:eq(' + index + ')');
-
 	}
+	else{
+		console.log(el[0].classList, el);
+	}
+	return $('#void');
 };
 p.ux_colHover = function (e) {
 	this.ux_unsetHover();
@@ -213,7 +242,6 @@ p.ux_colState = function (e) {
 	}
 	this.dom_setBlocksState(this.ux_colSelect(e), this._state);
 };
-
 
 p.dom_setBlocksState = function (blocks, state) {
 	if (!blocks || blocks.length === 0) {
@@ -236,9 +264,9 @@ p.dom_renderRanges = function () {
 	// console.time('dom_renderRanges');
 
 	// no drag process running, remove former ranges elements
-	if(this._dragStartCell){
+	if(this._dragStatus){
 		this._containerEl
-			.find('.gvp-row__day[data-day-index="' + this._dragStartCell.y + '"]')
+			.find('.gvp-row__day[data-day-index="' + this._dragStatus.y + '"]')
 			.find('.gvp__range')
 			.remove();
 	}
@@ -252,8 +280,8 @@ p.dom_renderRanges = function () {
 	for (iRange = 0, iRangeLen = ranges.length; iRange < iRangeLen; ++iRange) {
 		range = ranges[iRange];
 
-		if(this._dragStartCell){
-			if(range.day !== this._dragStartCell.y)
+		if(this._dragStatus){
+			if(range.day !== this._dragStatus.y)
 				continue;
 			range.startBlock.find('.gvp__range').remove();
 		}
@@ -462,9 +490,9 @@ p.model_retrieveRanges = function () {
 	// console.time('model_retrieveRanges');
 
 	// --- if a drag process is running remove all ranges belonging to the drag row
-	if(this._dragStartCell){
+	if(this._dragStatus){
 		for(iRange = this._planning.ranges.length - 1; iRange >= 0; --iRange){
-			if(this._planning.ranges[iRange].day === this._dragStartCell.y){
+			if(this._planning.ranges[iRange].day === this._dragStatus.y){
 				this._planning.ranges.splice(iRange, 1);
 			}
 		}
@@ -476,7 +504,7 @@ p.model_retrieveRanges = function () {
 	for (iDay = 0, iDayLen = this._o.days.length; iDay < iDayLen; ++iDay) {
 
 		// --- if a drag process is running, check only the  drag row
-		if(this._dragStartCell && this._dragStartCell.y !== iDay)
+		if(this._dragStatus && this._dragStatus.y !== iDay)
 			continue;
 
 		row = this._cellsGridArr[iDay];

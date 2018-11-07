@@ -147,6 +147,7 @@ body{
 	.gvp__hour{
 		padding-left: .25 * $gutter;
 		span{
+			pointer-events: none;
 			position: absolute;
 			z-index: 2;
 			left: 0;

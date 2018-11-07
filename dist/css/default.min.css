@@ -8,6 +8,7 @@ body {
   position: absolute;
   top: 0;
   left: -1px;
+  z-index: 1;
   display: block;
   content: '';
   width: 1px;
@@ -82,8 +83,16 @@ body {
   cursor: pointer; }
 
 .gvp .gvp__hour {
-  padding-left: 3px;
-  text-align: left; }
+  padding-left: 3px; }
+  .gvp .gvp__hour span {
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    background-color: white;
+    transform: translate(-50%, 0);
+    padding: 6px 3px 3px 3px;
+    line-height: 110%; }
 
 .gvp .gvp__block {
   position: relative; }

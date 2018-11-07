@@ -56,19 +56,19 @@
         <counts>
           <entry key="css" value="6" />
           <entry key="gitignore" value="4" />
-          <entry key="html" value="946" />
-          <entry key="js" value="15237" />
-          <entry key="scss" value="4013" />
+          <entry key="html" value="958" />
+          <entry key="js" value="15607" />
+          <entry key="scss" value="4302" />
           <entry key="yaml" value="71" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="6" />
-          <entry key="HTML" value="946" />
-          <entry key="JavaScript" value="15237" />
+          <entry key="HTML" value="958" />
+          <entry key="JavaScript" value="15607" />
           <entry key="PLAIN_TEXT" value="4" />
-          <entry key="SCSS" value="4013" />
+          <entry key="SCSS" value="4302" />
           <entry key="YAML" value="71" />
         </counts>
       </usages-collector>
@@ -79,28 +79,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="160" column="5" selection-start-line="160" selection-start-column="5" selection-end-line="160" selection-end-column="5" />
+            <state relative-caret-position="323">
+              <caret line="64" column="64" lean-forward="true" selection-start-line="64" selection-start-column="64" selection-end-line="64" selection-end-column="64" />
               <folding>
-                <element signature="e#324#548#0" />
-                <element signature="e#1856#2628#0" />
-                <element signature="e#2669#2792#0" />
-                <element signature="e#2830#3491#0" />
-                <element signature="e#4235#4288#0" />
-                <element signature="e#4320#4384#0" />
-                <element signature="e#4415#4494#0" />
-                <element signature="e#4525#4661#0" />
-                <element signature="e#4693#5265#0" />
-                <element signature="e#5296#5375#0" />
-                <element signature="e#5406#5542#0" />
-                <element signature="e#5594#5832#0" />
-                <element signature="e#5867#7409#0" />
-                <element signature="e#7437#9787#0" />
                 <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#9827#10427#0" />
-                <element signature="e#10465#10774#0" />
-                <element signature="e#10806#11648#0" />
-                <element signature="e#11679#11811#0" />
                 <element signature="e#12411#12584#0" />
                 <element signature="e#13741#13943#0" />
                 <element signature="e#14025#14379#0" />
@@ -112,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sass/main.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
-              <caret line="146" column="22" selection-start-line="146" selection-start-column="22" selection-end-line="146" selection-end-column="22" />
+            <state relative-caret-position="519">
+              <caret line="161" column="25" selection-start-line="161" selection-start-column="25" selection-end-line="161" selection-end-column="25" />
               <folding>
                 <element signature="e#412#548#0" />
                 <element signature="e#291#321#0" />
@@ -121,9 +103,9 @@
                 <element signature="e#2413#2471#0" />
                 <element signature="e#2407#2487#0" />
                 <element signature="e#2506#2529#0" />
+                <element signature="e#2509#2628#0" />
                 <element signature="e#2657#2792#0" />
                 <element signature="e#2815#2896#0" />
-                <element signature="e#3065#3091#0" />
                 <element signature="e#3025#3066#0" />
                 <element signature="e#3094#3128#0" />
                 <element signature="e#3156#3193#0" />
@@ -136,8 +118,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-286">
-              <caret line="20" column="29" lean-forward="true" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+            <state relative-caret-position="513">
+              <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -155,7 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mouseup</find>
       <find>hour-start</find>
       <find>1px solid lightgrey</find>
       <find>%uiplanning</find>
@@ -172,7 +153,6 @@
       <find>&amp;:after</find>
       <find>uiplanning</find>
       <find>UIPlanning</find>
-      <find>gvp-state-selector</find>
       <find>planning</find>
       <find>ux_blockStateMouseState</find>
       <find>ux_blockStateWatch</find>
@@ -185,6 +165,8 @@
       <find>console.time</find>
       <find>_cellsByDay</find>
       <find>_cellbyDay</find>
+      <find>gvp-state-selector</find>
+      <find>_dragStartCell</find>
     </findStrings>
     <replaceStrings>
       <replace>uiplanning-row</replace>
@@ -204,7 +186,6 @@
       <replace>%uiplanning-cell</replace>
       <replace>gvp</replace>
       <replace>p</replace>
-      <replace>GVPlanning</replace>
       <replace>ux_blockStateWatch</replace>
       <replace>gvp-row</replace>
       <replace>col</replace>
@@ -213,6 +194,8 @@
       <replace>_dragStartCell</replace>
       <replace>._cellsAll</replace>
       <replace>_cellsGridArr</replace>
+      <replace>GVPlanning</replace>
+      <replace>_dragStatus</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -420,12 +403,12 @@
       <workItem from="1541431975107" duration="6190000" />
       <workItem from="1541492470783" duration="23104000" />
       <workItem from="1541580042931" duration="511000" />
-      <workItem from="1541584240991" duration="18018000" />
+      <workItem from="1541584240991" duration="23426000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84337000" />
+    <option name="totallyTimeSpent" value="89745000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1216" extended-state="6" />
@@ -518,17 +501,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="1205" column="34" selection-start-line="1205" selection-start-column="34" selection-end-line="1205" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dist/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-286">
-          <caret line="20" column="29" lean-forward="true" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+        <state relative-caret-position="513">
+          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sass/main.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="146" column="22" selection-start-line="146" selection-start-column="22" selection-end-line="146" selection-end-column="22" />
+        <state relative-caret-position="519">
+          <caret line="161" column="25" selection-start-line="161" selection-start-column="25" selection-end-line="161" selection-end-column="25" />
           <folding>
             <element signature="e#412#548#0" />
             <element signature="e#291#321#0" />
@@ -536,9 +526,9 @@
             <element signature="e#2413#2471#0" />
             <element signature="e#2407#2487#0" />
             <element signature="e#2506#2529#0" />
+            <element signature="e#2509#2628#0" />
             <element signature="e#2657#2792#0" />
             <element signature="e#2815#2896#0" />
-            <element signature="e#3065#3091#0" />
             <element signature="e#3025#3066#0" />
             <element signature="e#3094#3128#0" />
             <element signature="e#3156#3193#0" />
@@ -547,37 +537,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="1205" column="34" selection-start-line="1205" selection-start-column="34" selection-end-line="1205" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="160" column="5" selection-start-line="160" selection-start-column="5" selection-end-line="160" selection-end-column="5" />
+        <state relative-caret-position="323">
+          <caret line="64" column="64" lean-forward="true" selection-start-line="64" selection-start-column="64" selection-end-line="64" selection-end-column="64" />
           <folding>
-            <element signature="e#324#548#0" />
-            <element signature="e#1856#2628#0" />
-            <element signature="e#2669#2792#0" />
-            <element signature="e#2830#3491#0" />
-            <element signature="e#4235#4288#0" />
-            <element signature="e#4320#4384#0" />
-            <element signature="e#4415#4494#0" />
-            <element signature="e#4525#4661#0" />
-            <element signature="e#4693#5265#0" />
-            <element signature="e#5296#5375#0" />
-            <element signature="e#5406#5542#0" />
-            <element signature="e#5594#5832#0" />
-            <element signature="e#5867#7409#0" />
-            <element signature="e#7437#9787#0" />
             <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#9827#10427#0" />
-            <element signature="e#10465#10774#0" />
-            <element signature="e#10806#11648#0" />
-            <element signature="e#11679#11811#0" />
             <element signature="e#12411#12584#0" />
             <element signature="e#13741#13943#0" />
             <element signature="e#14025#14379#0" />
