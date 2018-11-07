@@ -8,6 +8,7 @@ var UIPlanning = function (selector, options) {
 	this._feedbackEl = this._domEl.find('.planning-feedback');
 
 	this._options = Object.assign({
+		feedbackCallback: null,
 		hourFrom: 0,
 		hourTo: 24,
 		hourParts: 4,
@@ -18,7 +19,7 @@ var UIPlanning = function (selector, options) {
 
 	this._state = null;
 	/** @var boolean   allow developper to lock rendering during extensive update processes */
-	this._rangesRenderLock = true;
+	this._rangesRenderLock = false;
 
 	this._callbacks = {
 		model_setState: this.model_setState.bind(this),
@@ -44,6 +45,7 @@ var UIPlanning = function (selector, options) {
 		if (this._options.stateDefault !== null) {
 			this.model_setState(this._options.stateDefault);
 		}
+
 	}
 
 	// if a default state is set ==> fill all block with it
@@ -51,9 +53,6 @@ var UIPlanning = function (selector, options) {
 		this.model_setState(this._options.stateDefault);
 		this.dom_setBlocksState(this._allBlocks, this._state);
 	}
-
-	this._rangesRenderLock = false;
-	this.dom_renderRanges();
 };
 
 UIPlanning.prototype.ux_interactions = function () {
@@ -82,8 +81,11 @@ UIPlanning.prototype.ux_interactions = function () {
 		.on('click', '.planning-state-selector', this._callbacks.model_setState)
 	;
 };
-UIPlanning.prototype.ux_displayError = function (message) {
-	this._feedbackEl.html(message);
+UIPlanning.prototype.ux_displayError = function (message, level) {
+	if(this._options.feedbackCallback){
+		this._options.feedbackCallback(message, level);
+	}
+	console.log('[' + level + ']', message);
 };
 
 UIPlanning.prototype.ux_blockStateMouseState = function (e) {
@@ -353,6 +355,8 @@ UIPlanning.prototype.model_restore = function () {
 		iRange, iRangeLen, range, state,
 		iCell, iCellLen;
 
+	this._rangesRenderLock = true;
+
 	if (this._options.stateDefault !== null) {
 		this.dom_setBlocksState(this._allBlocks, this.model_retrieveState(this._options.stateDefault));
 	}
@@ -372,6 +376,10 @@ UIPlanning.prototype.model_restore = function () {
 			}
 		}
 	}
+
+	this._rangesRenderLock = false;
+	this.dom_renderRanges();
+	
 	console.log('[UIPlanning.model_restore] import completed');
 };
 UIPlanning.prototype.model_export = function () {
