@@ -9,14 +9,33 @@ body{
 	font-size: 14px;
 }
 
-.gv-planning {
+.gvp {
 	$border-radius: 8px;
 	$day-height: 30px;
 	$hours-parts-height: 16px;
 	$range-h-margin: 2px;
 	$range-v-margin: 2px;
-	$border-inner: 1px solid lightgrey;
-	$border-inner-xl: 2px solid lightgrey;
+	$border-outer: 1px solid lightgrey;
+	%border-inner{
+		&:after{
+			position: absolute;
+			top: 0;
+			left: -1px;
+
+			display: block;
+			content: '';
+			width: 1px;
+			height: 100%;
+
+			background-color: rgba(black, .1);
+		}
+	}
+	%border-inner-xl{
+		@extend %border-inner;
+		&:after{
+			background-color: rgba(black, .3);
+		}
+	}
 
 	// @todo remove after reintegration in global project
 
@@ -33,21 +52,15 @@ body{
 
 	// --- end @todo
 
-	.planning-feedback{
-		border: $border-inner;
-		padding: $gutter;
-		margin: $gutter 0;
-	}
-
 
 	// ############################## controls
 
-	.planning-controls{
+	.gvp-controls{
 		$state-selector-bullet-size: 12px;
 
 		padding: $gutter;
 
-		.planning-state-selector{
+		.gvp-state-selector{
 			position: relative;
 
 			display: inline-block;
@@ -55,7 +68,7 @@ body{
 			margin-left: $gutter;
 
 			border-radius: 2px;
-			border: $border-inner;
+			border: 1px lightgrey solid;
 
 			cursor: pointer;
 			@extend %no-select;
@@ -81,41 +94,42 @@ body{
 		}
 	}
 
-	.planning-container{
-		border: $border-inner;
+	.gvp-container{
+		border: $border-outer;
 	}
 
 
 	// ############################## rows & cells
 
-	%planning-row {
+	%gvp-row {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
 		width: 100%;
 	}
-	%uiplanning-cell {
+	%gvp-cell {
+		position: relative;
 		flex: 1 1 100px;
 	}
 
 	// --- rows
 
-	.uiplanning-row__hours{
-		@extend %planning-row;
+	.gvp-row__hours{
+		@extend %gvp-row;
 
 		height: $day-height;
 		line-height: $day-height;
-		border-bottom: $border-inner;
+		border-bottom: $border-outer;
 	}
-	.uiplanning-row__hour-parts{
-		@extend %planning-row;
+	.gvp-row__hour-parts{
+		@extend %gvp-row;
 
 		height: $hours-parts-height;
 		line-height: $hours-parts-height;
-		border-bottom: $border-inner;
+		border-bottom: $border-outer;
 	}
-	.uiplanning-row__day {
-		@extend %planning-row;
+	.gvp-row__day {
+		@extend %gvp-row;
 		height: $day-height;
 		line-height: $day-height;
 	}
@@ -123,18 +137,23 @@ body{
 
 	// --- cells
 
-	.uiplanning__hour, .uiplanning__hour-part {
-		@extend %uiplanning-cell;
+	.gvp__hour, .gvp__hour-part {
+		@extend %gvp-cell;
 		@extend %no-select;
-		text-align: center;
 		cursor: pointer;
-		border-left: $border-inner;
+		@extend %border-inner;
 	}
-	.uiplanning__day{
+	.gvp__hour{
+		padding-left: .25 * $gutter;
+		text-align:left;
+	}
+	.gvp__day{
 		@extend %no-select;
 	}
-	.uiplanning__block {
-		@extend %uiplanning-cell;
+	.gvp__block {
+		@extend %gvp-cell;
+		@extend %no-select;
+
 		position: relative;
 
 		&:before {
@@ -152,37 +171,27 @@ body{
 			background-color: rgba(black, .3);
 		}
 
-		&.uiplanning--target-hover{
-			&:after {
-				position: absolute;
-				z-index: 10;
-				width: 100%;
-				height: 100%;
-
-				display: block;
-				content: '';
-
-				background-color: rgba(black, .05);
-			}
+		&.gvp--target-hover{
+			background-color: rgba(black, .05);
 		}
 	}
 
-	.uiplanning-row > div:first-child{
+	.gvp-row > div:first-child{
 		flex: 0 0 100px;
 		padding: 0 4px;
 	}
 
-	.uiplanning--hour-start{
-		border-left: $border-inner;
+	.gvp--hour-start{
+		@extend %border-inner;
 	}
-	.uiplanning--hour-start-xl{
-		border-left: $border-inner-xl;
+	.gvp--hour-start-xl{
+		@extend %border-inner-xl;
 	}
 
 
 	// ############################## ranges
 
-	.uiplanning__range{
+	.gvp__range{
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -194,7 +203,7 @@ body{
 		@extend %no-select;
 		pointer-events: none;
 
-		.uiplanning__range-area{
+		.gvp__range-area{
 			position: absolute;
 			top: $range-v-margin;
 			bottom: $range-v-margin;
@@ -206,7 +215,7 @@ body{
 			border-radius: $border-radius;
 		}
 
-		.uiplanning__range-tooltip{
+		.gvp__range-tooltip{
 			position: absolute;
 			top: $gutter;
 			left: .5 * $gutter;
@@ -226,13 +235,12 @@ body{
 		}
 
 		&.show-tooltip{
-			.uiplanning__range-area{
+			.gvp__range-area{
 				opacity: .9;
 			}
-			.uiplanning__range-tooltip{
+			.gvp__range-tooltip{
 				display: block;
 			}
 		}
 	}
 }
-

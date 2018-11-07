@@ -16,9 +16,9 @@
 
 <div id="planning">
 
-	<div class="planning-container"></div>
+	<div class="gvp-container"></div>
 
-	<div class="planning-controls">
+	<div class="gvp-controls">
 		<label class="controls-info">Sélectionnez un état pour éditer le planning</label>
 		<span class="controls-selectors"></span>
 		<br />
@@ -32,7 +32,8 @@
 
 <script>
 
-	var planning = new UIPlanning('#planning', {
+	var planning = new GVPlanning('#planning', {
+		days: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
 		states: [
 			{
 				uid: '',
@@ -51,7 +52,8 @@
 			}
 		],
 		stateDefault: '',
-		planning: [[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"20:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}]],
+		stateSelectedDefault: 'occupation',
+		//planning: [[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"20:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}]],
 	});
 
 	$('#planning-restore').on('click', function(){

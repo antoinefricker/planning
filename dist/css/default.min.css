@@ -4,34 +4,42 @@ body {
   font-style: normal;
   font-size: 14px; }
 
-.gv-planning .planning-controls .planning-state-selector, .gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part, .gv-planning .uiplanning__day, .gv-planning .uiplanning__range {
+.gvp .gvp--hour-start-xl:after, .gvp .gvp__hour:after, .gvp .gvp__hour-part:after, .gvp .gvp--hour-start:after {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  display: block;
+  content: '';
+  width: 1px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.gvp .gvp--hour-start-xl:after {
+  background-color: rgba(0, 0, 0, 0.3); }
+
+.gvp .gvp-controls .gvp-state-selector, .gvp .gvp__hour, .gvp .gvp__hour-part, .gvp .gvp__day, .gvp .gvp__block, .gvp .gvp__range {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; }
 
-.gv-planning > div {
+.gvp > div {
   box-sizing: border-box; }
 
-.gv-planning .planning-feedback {
-  border: 1px solid lightgrey;
-  padding: 12px;
-  margin: 12px 0; }
-
-.gv-planning .planning-controls {
+.gvp .gvp-controls {
   padding: 12px; }
-  .gv-planning .planning-controls .planning-state-selector {
+  .gvp .gvp-controls .gvp-state-selector {
     position: relative;
     display: inline-block;
     padding: 6px 6px 6px 24px;
     margin-left: 12px;
     border-radius: 2px;
-    border: 1px solid lightgrey;
+    border: 1px lightgrey solid;
     cursor: pointer; }
-    .gv-planning .planning-controls .planning-state-selector.active {
+    .gvp .gvp-controls .gvp-state-selector.active {
       background-color: lightgrey; }
-    .gv-planning .planning-controls .planning-state-selector .bullet {
+    .gvp .gvp-controls .gvp-state-selector .bullet {
       position: absolute;
       top: 50%;
       left: 6px;
@@ -43,40 +51,43 @@ body {
       border-radius: 2px;
       pointer-events: none; }
 
-.gv-planning .planning-container {
+.gvp .gvp-container {
   border: 1px solid lightgrey; }
 
-.gv-planning .uiplanning-row__hours, .gv-planning .uiplanning-row__hour-parts, .gv-planning .uiplanning-row__day {
+.gvp .gvp-row__hours, .gvp .gvp-row__hour-parts, .gvp .gvp-row__day {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%; }
 
-.gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part, .gv-planning .uiplanning__block {
+.gvp .gvp__hour, .gvp .gvp__hour-part, .gvp .gvp__block {
+  position: relative;
   flex: 1 1 100px; }
 
-.gv-planning .uiplanning-row__hours {
+.gvp .gvp-row__hours {
   height: 30px;
   line-height: 30px;
   border-bottom: 1px solid lightgrey; }
 
-.gv-planning .uiplanning-row__hour-parts {
+.gvp .gvp-row__hour-parts {
   height: 16px;
   line-height: 16px;
   border-bottom: 1px solid lightgrey; }
 
-.gv-planning .uiplanning-row__day {
+.gvp .gvp-row__day {
   height: 30px;
   line-height: 30px; }
 
-.gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part {
-  text-align: center;
-  cursor: pointer;
-  border-left: 1px solid lightgrey; }
+.gvp .gvp__hour, .gvp .gvp__hour-part {
+  cursor: pointer; }
 
-.gv-planning .uiplanning__block {
+.gvp .gvp__hour {
+  padding-left: 3px;
+  text-align: left; }
+
+.gvp .gvp__block {
   position: relative; }
-  .gv-planning .uiplanning__block:before {
+  .gvp .gvp__block:before {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -87,26 +98,14 @@ body {
     width: 1px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.3); }
-  .gv-planning .uiplanning__block.uiplanning--target-hover:after {
-    position: absolute;
-    z-index: 10;
-    width: 100%;
-    height: 100%;
-    display: block;
-    content: '';
+  .gvp .gvp__block.gvp--target-hover {
     background-color: rgba(0, 0, 0, 0.05); }
 
-.gv-planning .uiplanning-row > div:first-child {
+.gvp .gvp-row > div:first-child {
   flex: 0 0 100px;
   padding: 0 4px; }
 
-.gv-planning .uiplanning--hour-start {
-  border-left: 1px solid lightgrey; }
-
-.gv-planning .uiplanning--hour-start-xl {
-  border-left: 2px solid lightgrey; }
-
-.gv-planning .uiplanning__range {
+.gvp .gvp__range {
   position: absolute;
   top: 0;
   left: 0;
@@ -114,7 +113,7 @@ body {
   display: block;
   height: 100%;
   pointer-events: none; }
-  .gv-planning .uiplanning__range .uiplanning__range-area {
+  .gvp .gvp__range .gvp__range-area {
     position: absolute;
     top: 2px;
     bottom: 2px;
@@ -123,7 +122,7 @@ body {
     display: block;
     opacity: .7;
     border-radius: 8px; }
-  .gv-planning .uiplanning__range .uiplanning__range-tooltip {
+  .gvp .gvp__range .gvp__range-tooltip {
     position: absolute;
     top: 12px;
     left: 6px;
@@ -137,7 +136,7 @@ body {
     height: auto;
     color: white;
     white-space: nowrap; }
-  .gv-planning .uiplanning__range.show-tooltip .uiplanning__range-area {
+  .gvp .gvp__range.show-tooltip .gvp__range-area {
     opacity: .9; }
-  .gv-planning .uiplanning__range.show-tooltip .uiplanning__range-tooltip {
+  .gvp .gvp__range.show-tooltip .gvp__range-tooltip {
     display: block; }

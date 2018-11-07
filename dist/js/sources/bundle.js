@@ -1,175 +1,218 @@
-var UIPlanning = function (selector, options) {
+var GVPlanning = function (selector, options) {
 
-	this._domEl = $(selector);
-	this._domEl.addClass('gv-planning');
+	// ##########################################
 
-	this._containerEl = this._domEl.find('.planning-container');
-	this._controlsEl = this._domEl.find('.planning-controls');
-	this._feedbackEl = this._domEl.find('.planning-feedback');
+	// --- options
 
-	this._options = Object.assign({
+	this._o = Object.assign({
+		feedbackCallback: null,
 		hourFrom: 0,
 		hourTo: 24,
 		hourParts: 4,
-		dayNames: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+		days: [],
+		states: [],
 		stateDefault: null,
-		states: []
+		stateSelectedDefault: null,
 	}, options);
 
-	this._state = null;
-	/** @var boolean   allow developper to lock rendering during extensive update processes */
-	this._rangesRenderLock = true;
+	if(!this._o.stateDefault)
+		this._o.stateDefault = this._o.states[0];
+	else if(typeof this._o.stateDefault === 'string')
+		this._o.stateDefault = this.model_getState(this._o.stateDefault);
 
-	this._callbacks = {
+
+	// --- variables initialization
+
+	this._cbs = {
 		model_setState: this.model_setState.bind(this),
-		ux_releaseHover: this.ux_releaseHover.bind(this),
-		ux_columnState: this.ux_columnState.bind(this),
-		ux_columnHover: this.ux_columnHover.bind(this),
+		ux_unsetHover: this.ux_unsetHover.bind(this),
+		ux_colState: this.ux_colState.bind(this),
+		ux_colHover: this.ux_colHover.bind(this),
 		ux_rowState: this.ux_rowState.bind(this),
 		ux_rowHover: this.ux_rowHover.bind(this),
 		ux_blockState: this.ux_blockState.bind(this),
-		ux_blockStateMouseState: this.ux_blockStateMouseState.bind(this),
+		ux_blockStateWatch: this.ux_blockStateWatch.bind(this),
+	};
+
+	this._state = null;
+
+	// allow developper to lock rendering during extensive update processes
+	this._rangesRenderLock = false;
+	// while dragging to "paint" in block-type cells, store the position of the drag start position
+	this._dragStartCell = null;
+	// store all ranges settings
+	this._planning = {
+		ranges: [],
+		week: [],
 	};
 	
-	// ############## init
+	// ########################################## INIT INSTANCE
+
+	this._domEl = $(selector)
+		.addClass('gvp');
+	this._containerEl = this._domEl.find('.gvp-container');
+	this._controlsEl = this._domEl.find('.gvp-controls');
 
 	this.dom_build();
-	this._allBlocks = this._containerEl.find('.uiplanning__block');
 
 	this.ux_interactions();
 
+
 	// --- if a configuration is set ==> display it
-	if (this._options.planning !== null) {
+	if (this._o.planning) {
 		this.model_restore();
-		if (this._options.stateDefault !== null) {
-			this.model_setState(this._options.stateDefault);
-		}
 	}
-
-	// if a default state is set ==> fill all block with it
-	else if (this._options.stateDefault !== null) {
-		this.model_setState(this._options.stateDefault);
-		this.dom_setBlocksState(this._allBlocks, this._state);
+	if (this._o.stateSelectedDefault) {
+		this.model_setState(this._o.stateSelectedDefault);
 	}
-
-	this._rangesRenderLock = false;
-	this.dom_renderRanges();
 };
+var p = GVPlanning.prototype;
 
-UIPlanning.prototype.ux_interactions = function () {
+
+p.ux_interactions = function () {
 	this._containerEl
 
 	// --- complete day
-		.on('click', '.uiplanning__day', this._callbacks.ux_rowState)
-		.on('mouseenter', '.uiplanning__day', this._callbacks.ux_rowHover)
-		.on('mouseleave', '.uiplanning__day', this._callbacks.ux_releaseHover)
+		.on('click', '.gvp__day', this._cbs.ux_rowState)
+		.on('mouseover', '.gvp__day', this._cbs.ux_rowHover)
+		.on('mouseleave', '.gvp__day', this._cbs.ux_unsetHover)
 
 		// ---	complete hour
-		.on('click', '.uiplanning__hour', this._callbacks.ux_columnState)
-		.on('mouseenter', '.uiplanning__hour', this._callbacks.ux_columnHover)
-		.on('mouseleave', '.uiplanning__hour', this._callbacks.ux_releaseHover)
+		.on('click', '.gvp__hour', this._cbs.ux_colState)
+		.on('mouseover', '.gvp__hour', this._cbs.ux_colHover)
+		.on('mouseleave', '.gvp__hour', this._cbs.ux_unsetHover)
 
 		// ---	hour part
-		.on('click', '.uiplanning__hour-part', this._callbacks.ux_columnState)
-		.on('mouseenter', '.uiplanning__hour-part', this._callbacks.ux_columnHover)
-		.on('mouseleave', '.uiplanning__hour-part', this._callbacks.ux_releaseHover)
+		.on('click', '.gvp__hour-part', this._cbs.ux_colState)
+		.on('mouseover', '.gvp__hour-part', this._cbs.ux_colHover)
+		.on('mouseleave', '.gvp__hour-part', this._cbs.ux_unsetHover)
 
 		// --- element
-		.on('mousedown', '.uiplanning__block', this._callbacks.ux_blockStateMouseState)
+		.on('mousedown', '.gvp__block', this._cbs.ux_blockStateWatch)
 	;
 
 	this._controlsEl
-		.on('click', '.planning-state-selector', this._callbacks.model_setState)
+		.on('click', '.gvp-state-selector', this._cbs.model_setState)
 	;
 };
-UIPlanning.prototype.ux_displayError = function (message) {
-	this._feedbackEl.html(message);
+p.ux_error = function (message, level) {
+	if(this._o.feedbackCallback){
+		this._o.feedbackCallback(message, level);
+	}
+	console.log('[' + level + ']', message);
 };
-
-UIPlanning.prototype.ux_blockStateMouseState = function (e) {
+p.ux_blockStateWatch = function (e) {
 	if (!this._state) {
-		this.ux_displayError('no-state-selected');
+		this.ux_error('no-state-selected');
 		return;
 	}
-
 	if (e.button && e.button === 2) {
 		return;
 	}
 
 	if (e.type === 'mousedown') {
-		this._containerEl.on('mouseenter', '.uiplanning__block', this._callbacks.ux_blockState);
-		$(document).on('mouseup dragend', this._callbacks.ux_blockStateMouseState);
-		if ($(e.target).is('.uiplanning__block')) {
-			this.ux_blockState(e);
-		}
+		this._containerEl
+			.on('mouseover', '.gvp__block', this._cbs.ux_blockState);
+		$(document)
+			.on('mouseup', this._cbs.ux_blockStateWatch);
+		$(window)
+			.on('mouseup', this._cbs.ux_blockStateWatch);
+
+		this.ux_blockState(e);
 	}
-	else if (e.type === 'mouseup') {
-		this._containerEl.off('mouseenter', '.uiplanning__block', this._callbacks.ux_blockState);
-		$(document).off('mouseup dragend', this._callbacks.ux_blockStateMouseState);
+	else{
+		// release drag lock
+		this._dragStartCell = null;
+
+		this._containerEl
+			.off('mouseover', '.gvp__block', this._cbs.ux_blockState);
+		$(document)
+			.off('mouseup', this._cbs.ux_blockStateWatch);
+		$(window)
+			.off('mouseup', this._cbs.ux_blockStateWatch);
 	}
 };
-UIPlanning.prototype.ux_blockState = function (e) {
+p.ux_blockState = function (e) {
+	var block, row, xBlock, yBlock, selBlocks;
+
 	if (!this._state) {
-		this.ux_displayError('no-state-selected');
+		this.ux_error('no-state-selected');
 		return;
 	}
 
-	this.dom_setBlocksState($(e.target), this._state);
-};
+	block = $(e.target);
+	row = block.parent('.gvp-row__day');
+	xBlock = row.find('.gvp__block').index(block);
+	yBlock = parseInt(row.attr('data-day-index'));
 
-UIPlanning.prototype.ux_releaseHover = function () {
-	this._allBlocks.removeClass('uiplanning--target-hover');
-};
+	if(!this._dragStartCell){
+		this._dragStartCell = {
+			x: xBlock,
+			y: yBlock
+		};
+	}
+	else if(yBlock != this._dragStartCell.y){
+		return;
+	}
 
-UIPlanning.prototype.ux_rowSelect = function (e) {
-	return $(e.target).closest('.uiplanning-row').find('.uiplanning__block');
+	selBlocks = this._cellsByDay[yBlock].slice(
+		Math.min(xBlock, this._dragStartCell.x),
+		Math.max(xBlock, this._dragStartCell.x)
+	);
+	this.dom_setBlocksState(selBlocks, this._state);
 };
-UIPlanning.prototype.ux_rowHover = function (e) {
-	this.ux_releaseHover();
-	this.ux_rowSelect(e).addClass('uiplanning--target-hover');
+p.ux_unsetHover = function () {
+	this._cellsAll.removeClass('gvp--target-hover');
 };
-UIPlanning.prototype.ux_rowState = function (e) {
+p.ux_rowSelect = function (e) {
+	return $(e.target).closest('.gvp-row').find('.gvp__block');
+};
+p.ux_rowHover = function (e) {
+	this.ux_unsetHover();
+	this.ux_rowSelect(e).addClass('gvp--target-hover');
+};
+p.ux_rowState = function (e) {
 	if (!this._state) {
-		this.ux_displayError('no-state-selected');
+		this.ux_error('no-state-selected');
 		return;
 	}
 	this.dom_setBlocksState(this.ux_rowSelect(e), this._state);
 };
-
-UIPlanning.prototype.ux_columnSelect = function (e) {
+p.ux_colSelect = function (e) {
 	var el = $(e.target), index, selectors;
 
 	// ---	complete hour
-	if (el.is('.uiplanning__hour')) {
-		index = el.closest('.uiplanning-row').find('.uiplanning__hour').index(el);
+	if (el.is('.gvp__hour')) {
+		index = el.closest('.gvp-row').find('.gvp__hour').index(el);
 		selectors = [];
-		for (var i = index * this._options.hourParts, iLen = i + this._options.hourParts; i < iLen; ++i) {
-			selectors.push('.uiplanning__block:eq(' + i + ')');
+		for (var i = index * this._o.hourParts, iLen = i + this._o.hourParts; i < iLen; ++i) {
+			selectors.push('.gvp__block:eq(' + i + ')');
 		}
-		return $('.uiplanning-row__day').find(selectors.join(', '));
+		return $('.gvp-row__day').find(selectors.join(', '));
 	}
 	// ---	hour parts
-	else if (el.is('.uiplanning__hour-part')) {
-		index = el.closest('.uiplanning-row').find('.uiplanning__hour-part').index(el);
-		return $('.uiplanning-row__day').find('.uiplanning__block:eq(' + index + ')');
+	else if (el.is('.gvp__hour-part')) {
+		index = el.closest('.gvp-row').find('.gvp__hour-part').index(el);
+		return $('.gvp-row__day').find('.gvp__block:eq(' + index + ')');
 
 	}
 };
-UIPlanning.prototype.ux_columnHover = function (e) {
-	this.ux_releaseHover();
-	this.ux_columnSelect(e).addClass('uiplanning--target-hover');
+p.ux_colHover = function (e) {
+	this.ux_unsetHover();
+	this.ux_colSelect(e).addClass('gvp--target-hover');
 };
-UIPlanning.prototype.ux_columnState = function (e) {
+p.ux_colState = function (e) {
 	if (!this._state) {
-		this.ux_displayError('no-state-selected');
+		this.ux_error('no-state-selected');
 		return;
 	}
-	this.dom_setBlocksState(this.ux_columnSelect(e), this._state);
+	this.dom_setBlocksState(this.ux_colSelect(e), this._state);
 };
 
-UIPlanning.prototype.dom_setBlocksState = function (blocks, state) {
+
+p.dom_setBlocksState = function (blocks, state) {
 	if (!blocks || blocks.length === 0) {
-		console.log('no-target');
+		this.ux_error('no-target');
 		return;
 	}
 
@@ -180,23 +223,40 @@ UIPlanning.prototype.dom_setBlocksState = function (blocks, state) {
 		this.dom_renderRanges();
 	}
 };
-UIPlanning.prototype.dom_renderRanges = function () {
+p.dom_renderRanges = function () {
 	var self = this,
 		str,
 		ranges, iRange, iRangeLen, range;
 
-	// --- clear former state
-	this._containerEl.find('.uiplanning__range').remove();
+	// console.time('dom_renderRanges');
+
+	// no drag process running, remove former ranges elements
+	if(this._dragStartCell){
+		this._containerEl
+			.find('.gvp-row__day[data-day-index="' + this._dragStartCell.y + '"]')
+			.find('.gvp__range')
+			.remove();
+	}
+	else{
+		this._containerEl
+			.find('.gvp__range')
+			.remove();
+	}
 
 	ranges = this.model_retrieveRanges().ranges;
 	for (iRange = 0, iRangeLen = ranges.length; iRange < iRangeLen; ++iRange) {
 		range = ranges[iRange];
 
+		if(this._dragStartCell){
+			if(range.day !== this._dragStartCell.y)
+				continue;
+			range.startBlock.find('.gvp__range').remove();
+		}
+
 		// --- create tooltip instance
-		str = '';
-		str += '<div class="uiplanning__range">';
-		str += '<div class="uiplanning__range-area"></div>';
-		str += '<div class="uiplanning__range-tooltip">' + range.start + ' - ' + range.end + '</div>';
+		str = '<div class="gvp__range">';
+		str += '<div class="gvp__range-area"></div>';
+		str += '<div class="gvp__range-tooltip">' + range.start + ' - ' + range.end + '</div>';
 		str += '</div>';
 		range.tipEl = $(str);
 
@@ -205,14 +265,14 @@ UIPlanning.prototype.dom_renderRanges = function () {
 				width: range.endBlock.offset().left - range.startBlock.offset().left + range.startBlock.width()
 			})
 			.appendTo(range.startBlock)
-			.find('.uiplanning__range-area')
+			.find('.gvp__range-area')
 				.css({
 					'background-color': range.state.color,
 				});
 
 		(function(range){
 			for(var a = range.startIndex; a <= range.endIndex; a++){
-				self._cells[range.day][a]
+				self._cellsGridArr[range.day][a]
 					.on('mouseover', function(){
 						range.tipEl.addClass('show-tooltip');
 					})
@@ -222,12 +282,14 @@ UIPlanning.prototype.dom_renderRanges = function () {
 			}
 		}(range));
 	}
+
+	// console.timeEnd('dom_renderRanges');
 };
-UIPlanning.prototype.dom_build = function () {
+p.dom_build = function () {
 	var str,
 		self = this,
 		i, iLen,
-		iDay,
+		iDay, iDayLen,
 		classes,
 		dayCells,
 		iHour, iHourMod, iHourLen;
@@ -236,10 +298,10 @@ UIPlanning.prototype.dom_build = function () {
 	// ##################### BUILD STATES SELECTORS
 
 	str = '';
-	for (i = 0, iLen = this._options.states.length; i < iLen; ++i) {
-		str += '<div class="planning-state-selector" data-state="' + this._options.states[i].uid + '">'
-			+ '<span class="bullet" style="background-color: ' + this._options.states[i].color + ';"></span>'
-			+ this._options.states[i].label
+	for (i = 0, iLen = this._o.states.length; i < iLen; ++i) {
+		str += '<div class="gvp-state-selector" data-state="' + this._o.states[i].uid + '">'
+			+ '<span class="bullet" style="background-color: ' + this._o.states[i].color + ';"></span>'
+			+ this._o.states[i].label
 			+ '</div>';
 	}
 	this._controlsEl.find('.controls-selectors').append(str);
@@ -248,33 +310,33 @@ UIPlanning.prototype.dom_build = function () {
 	// ##################### BUILD GRID
 
 	str = '';
-	iHourLen = 24 * this._options.hourParts;
+	iHourLen = 24 * this._o.hourParts;
 
 	// ---	hours display
 
-	str += '<div class="uiplanning-row uiplanning-row__hours">';
+	str += '<div class="gvp-row gvp-row__hours">';
 	str += '<div></div>';
 	for (iHour = 0; iHour < iHourLen; iHour++) {
-		iHourMod = iHour % this._options.hourParts;
+		iHourMod = iHour % this._o.hourParts;
 		if (iHourMod === 0) {
-			str += '<div class="uiplanning__hour';
-			if(iHour > 0 && (iHour / this._options.hourParts) % 6 == 0){
-				str += ' uiplanning--hour-start-xl';
+			str += '<div class="gvp__hour gvp--hour-start';
+			if(iHour > 0 && (iHour / this._o.hourParts) % 6 == 0){
+				str += '-xl';
 			}
-			str += '">' + Math.ceil(iHour / this._options.hourParts) + 'h';
+			str += '">' + Math.ceil(iHour / this._o.hourParts) + 'h';
 		}
-		else if (iHourMod === (this._options.hourParts - 1))
+		else if (iHourMod === (this._o.hourParts - 1))
 			str += '</div>';
 	}
 	str += '</div>';
 
 
-	str += '<div class="uiplanning-row uiplanning-row__hour-parts">';
+	str += '<div class="gvp-row gvp-row__hour-parts">';
 	str += '<div></div>';
 	for (iHour = 0; iHour < iHourLen; iHour++) {
-		str += '<div class="uiplanning__hour-part';
-		if(iHour > 0 && (iHour / this._options.hourParts) % 6 == 0){
-			str += ' uiplanning--hour-start-xl';
+		str += '<div class="gvp__hour-part';
+		if(iHour > 0 && (iHour / this._o.hourParts) % 6 == 0){
+			str += ' gvp--hour-start-xl';
 		}
 		str += '"></div>';
 	}
@@ -282,13 +344,13 @@ UIPlanning.prototype.dom_build = function () {
 
 
 	// ---	days display
-	for (iDay = 0; iDay < 7; iDay++) {
-		str += '<div class="uiplanning-row uiplanning-row__day">';
-		str += '<div class="uiplanning__day">' + this._options.dayNames[iDay] + '</div>';
+	for (iDay = 0, iDayLen = this._o.days.length; iDay < iDayLen; iDay++) {
+		str += '<div class="gvp-row gvp-row__day" data-day-index="' + iDay + '">';
+		str += '<div class="gvp__day">' + this._o.days[iDay] + '</div>';
 		for (iHour = 0; iHour < iHourLen; iHour++) {
-			classes = 'uiplanning__block';
-			if (iHour % this._options.hourParts === 0) {
-				classes += (iHour > 0 && ((iHour / this._options.hourParts) % 6 == 0)) ? ' uiplanning--hour-start-xl' : ' uiplanning--hour-start';
+			classes = 'gvp__block';
+			if (iHour % this._o.hourParts === 0) {
+				classes += (iHour > 0 && ((iHour / this._o.hourParts) % 6 == 0)) ? ' gvp--hour-start-xl' : ' gvp--hour-start';
 			}
 			str += '<div class="' + classes + '"></div>';
 		}
@@ -300,18 +362,22 @@ UIPlanning.prototype.dom_build = function () {
 
 	// --- store all cells
 
-	this._cells = [];
-	this._containerEl.find('.uiplanning-row__day').each(function (rowIndex, rowEl) {
+	this._cellsGridArr = [];
+	this._cellsByDay = [];
+	this._containerEl.find('.gvp-row__day').each(function (rowIndex, rowEl) {
 		rowEl = $(rowEl);
 		dayCells = [];
-		rowEl.find('.uiplanning__block').each(function (blockIndex, blockEl) {
+		rowEl.find('.gvp__block').each(function (blockIndex, blockEl) {
 			dayCells.push($(blockEl));
 		});
-		self._cells.push(dayCells);
+		self._cellsGridArr.push(dayCells);
+		self._cellsByDay.push(rowEl.find('.gvp__block'));
 	});
+	self._cellsAll = this._containerEl.find('.gvp__block');
 };
 
-UIPlanning.prototype.model_retrieveState = function (input) {
+
+p.model_getState = function (input) {
 	// retrieve state from event
 	if (typeof input === 'object' && input.hasOwnProperty('target')) {
 		input = $(input.target).attr('data-state');
@@ -319,89 +385,106 @@ UIPlanning.prototype.model_retrieveState = function (input) {
 
 	// prevent illegal calls
 	if (input === null || typeof input !== 'string') {
-		console.log('[UIPlanning.model_setState] Unable to retrieve state from passed-in parameter: ', input);
+		console.warn('[GVPlanning.model_setState] Unable to retrieve state from passed-in parameter: ', input);
 		return false;
 	}
 
-	for (var i = 0, iLen = this._options.states.length; i < iLen; ++i) {
-		if (this._options.states[i].uid === input) {
-			return this._options.states[i];
+	for (var i = 0, iLen = this._o.states.length; i < iLen; ++i) {
+		if (this._o.states[i].uid === input) {
+			return this._o.states[i];
 		}
 	}
 
-	console.log('[UIPlanning.model_setState] Unable to retrieve state from UID: ', input);
+	console.log('[GVPlanning.model_setState] Unable to retrieve state from UID: ', input);
 	return false;
 };
-UIPlanning.prototype.model_setState = function (state) {
-	state = this.model_retrieveState(state);
+p.model_setState = function (state) {
+	state = this.model_getState(state);
 	if (state === false) {
 		return;
 	}
 
 	this._state = state;
-	this._controlsEl.find('.planning-state-selector')
+	this._controlsEl.find('.gvp-state-selector')
 		.removeClass('active')
 		.filter('[data-state="' + this._state.uid + '"]').addClass('active');
 	this._domEl.trigger('stateSelected', {
 		state: this._state
 	});
 };
-UIPlanning.prototype.model_restore = function () {
+p.model_restore = function () {
 	var
-		p = this._options.planning,
-		iDay, rowDay,
+		p = this._o.planning,
+		iDay, iDayLen, rowDay,
 		iRange, iRangeLen, range, state,
 		iCell, iCellLen;
 
-	if (this._options.stateDefault !== null) {
-		this.dom_setBlocksState(this._allBlocks, this.model_retrieveState(this._options.stateDefault));
-	}
+	this._rangesRenderLock = true;
 
 	// --- day loop
-	for (iDay = 0; iDay < 7; ++iDay) {
-		rowDay = this._containerEl.find('.uiplanning-row__day:eq(' + iDay + ')');
+	for (iDay = 0, iDayLen = this._o.days.length; iDay < iDayLen; ++iDay) {
+		rowDay = this._containerEl.find('.gvp-row__day:eq(' + iDay + ')');
 
 		// --- range loop
 		for (iRange = 0, iRangeLen = p[iDay].length; iRange < iRangeLen; ++iRange) {
 			range = p[iDay][iRange];
-			state = this.model_retrieveState(range.s);
+			state = this.model_getState(range.s);
 
 			// --- cell loop
 			for (iCell = this._convertHourToIndex(range.start), iCellLen = this._convertHourToIndex(range.end); iCell < iCellLen; ++iCell) {
-				this.dom_setBlocksState(rowDay.find('.uiplanning__block:eq(' + iCell + ')'), state);
+				this.dom_setBlocksState(rowDay.find('.gvp__block:eq(' + iCell + ')'), state);
 			}
 		}
 	}
-	console.log('[UIPlanning.model_restore] import completed');
+
+	this._rangesRenderLock = false;
+	this.dom_renderRanges();
+
+	console.log('[GVPlanning.model_restore] import completed');
 };
-UIPlanning.prototype.model_export = function () {
+p.model_export = function () {
 	var settings = this.model_retrieveRanges();
 	console.log('model_export', JSON.stringify(settings.week));
 	return settings.week;
 };
-UIPlanning.prototype.model_retrieveRanges = function () {
+p.model_retrieveRanges = function () {
 	var
-		iRow, iRowLen, row,
+		stateUID,
+		iDay, iDayLen, row,
 		iRange, iRangeLen,
 		iBlock, iBlockLen, block,
-		out = {
-			ranges: [],
-			week: []
-		},
 		rowRanges, outRange;
 
 	// console.time('model_retrieveRanges');
-	for (iRow = 0, iRowLen = this._cells.length; iRow < iRowLen; ++iRow) {
-		row = this._cells[iRow];
+
+	// --- if a drag process is running remove all ranges belonging to the drag row
+	if(this._dragStartCell){
+		for(iRange = this._planning.ranges.length - 1; iRange >= 0; --iRange){
+			if(this._planning.ranges[iRange].day === this._dragStartCell.y){
+				this._planning.ranges.splice(iRange, 1);
+			}
+		}
+	}
+	else{
+		this._planning.ranges = [];
+	}
+
+	for (iDay = 0, iDayLen = this._o.days.length; iDay < iDayLen; ++iDay) {
+
+		// --- if a drag process is running, check only the  drag row
+		if(this._dragStartCell && this._dragStartCell.y !== iDay)
+			continue;
+
+		row = this._cellsGridArr[iDay];
 		rowRanges = [];
 		for (iBlock = 0, iBlockLen = row.length; iBlock < iBlockLen; ++iBlock) {
 			block = row[iBlock];
-
 			if (!outRange) {
+				stateUID = block.attr('data-state') || this._o.stateDefault.uid;
 				outRange = {
-					s: block.attr('data-state'),
-					state: this.model_retrieveState(block.attr('data-state')),
-					day: iRow,
+					s: stateUID,
+					state: stateUID ? this.model_getState(stateUID) : this._o.stateDefault,
+					day: iDay,
 					start: this._convertIndexToHour(iBlock, false),
 					startIndex: iBlock,
 					startBlock: row[iBlock]
@@ -416,10 +499,11 @@ UIPlanning.prototype.model_retrieveRanges = function () {
 					rowRanges.push(outRange);
 				}
 
+				stateUID = block.attr('data-state') || this._o.stateDefault.uid;
 				outRange = {
-					s: block.attr('data-state'),
-					state: this.model_retrieveState(block.attr('data-state')),
-					day: iRow,
+					s: stateUID,
+					state: stateUID ? this.model_getState(stateUID) : this._o.stateDefault,
+					day: iDay,
 					start: this._convertIndexToHour(iBlock, false),
 					startIndex: iBlock,
 					startBlock: row[iBlock]
@@ -437,10 +521,10 @@ UIPlanning.prototype.model_retrieveRanges = function () {
 		outRange = null;
 
 		// copy row ranges
-		out.week[iRow] = [];
+		this._planning.week[iDay] = [];
 		for (iRange = 0, iRangeLen = rowRanges.length; iRange < iRangeLen; ++iRange) {
-			out.ranges.push(rowRanges[iRange]);
-			out.week[iRow].push({
+			this._planning.ranges.push(rowRanges[iRange]);
+			this._planning.week[iDay].push({
 				s: rowRanges[iRange].s,
 				start: rowRanges[iRange].start,
 				end: rowRanges[iRange].end
@@ -448,22 +532,22 @@ UIPlanning.prototype.model_retrieveRanges = function () {
 		}
 	}
 	// console.timeEnd('model_retrieveRanges');
-	return out;
+	return this._planning;
 };
 
 
-UIPlanning.prototype._convertHourToIndex = function (s) {
+p._convertHourToIndex = function (s) {
 	var tokens = s.split(':'),
 		h = parseInt(tokens[0]),
 		m = parseInt(tokens[1]);
-	if (m % (60 / this._options.hourParts) !== 0)
+	if (m % (60 / this._o.hourParts) !== 0)
 		m += 1;
-	return (h * this._options.hourParts) + (m / (60 / this._options.hourParts));
+	return (h * this._o.hourParts) + (m / (60 / this._o.hourParts));
 };
-UIPlanning.prototype._convertIndexToHour = function (i, offset) {
-	var h, m, s;
-	h = Math.floor(i / this._options.hourParts);
-	m = 60 / this._options.hourParts * (i % this._options.hourParts);
+p._convertIndexToHour = function (i, offset) {
+	var h, m;
+	h = Math.floor(i / this._o.hourParts);
+	m = 60 / this._o.hourParts * (i % this._o.hourParts);
 	if (offset === true) {
 		m = (m - 1 + 60) % 60;
 		if (m === 59)
@@ -473,10 +557,5 @@ UIPlanning.prototype._convertIndexToHour = function (i, offset) {
 
 	h = h.toString();
 	m = m.toString();
-
-	s = '';
-	s += (h.length < 2) ? '0' + h : h;
-	s += ':';
-	s += (m.length < 2) ? '0' + m : m;
-	return s;
+	return ((h.length < 2) ? '0' + h : h) + ':' + ((m.length < 2) ? '0' + m : m);
 };
