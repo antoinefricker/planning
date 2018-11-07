@@ -133,7 +133,7 @@ p.ux_blockStateWatch = function (e) {
 	}
 };
 p.ux_blockState = function (e) {
-	var block, row, xBlock, yBlock, selBlocks;
+	var block, row, xBlock, yBlock, selBlocks, min, max;
 
 	if (!this._state) {
 		this.ux_error('no-state-selected');
@@ -155,10 +155,15 @@ p.ux_blockState = function (e) {
 		return;
 	}
 
-	selBlocks = this._cellsByDay[yBlock].slice(
-		Math.min(xBlock, this._dragStartCell.x),
-		Math.max(xBlock, this._dragStartCell.x)
-	);
+	if(xBlock > this._dragStartCell.x){
+		min = this._dragStartCell.x;
+		max = xBlock;
+	}
+	else{
+		min = xBlock;
+		max = this._dragStartCell.x;
+	}
+	selBlocks = this._cellsByDay[yBlock].slice(min, max + 1);
 	this.dom_setBlocksState(selBlocks, this._state);
 };
 p.ux_unsetHover = function () {
@@ -323,7 +328,7 @@ p.dom_build = function () {
 			if(iHour > 0 && (iHour / this._o.hourParts) % 6 == 0){
 				str += '-xl';
 			}
-			str += '">' + Math.ceil(iHour / this._o.hourParts) + 'h';
+			str += '"><span>' + Math.ceil(iHour / this._o.hourParts) + 'h' + '</span>';
 		}
 		else if (iHourMod === (this._o.hourParts - 1))
 			str += '</div>';
@@ -375,7 +380,6 @@ p.dom_build = function () {
 	});
 	self._cellsAll = this._containerEl.find('.gvp__block');
 };
-
 
 p.model_getState = function (input) {
 	// retrieve state from event
