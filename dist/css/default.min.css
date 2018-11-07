@@ -4,147 +4,140 @@ body {
   font-style: normal;
   font-size: 14px; }
 
-.gv-planning {
-  position: relative; }
-  .gv-planning > div {
-    box-sizing: border-box; }
-  .gv-planning .uiplanning__range {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    display: block;
-    height: 100%;
-    pointer-events: none; }
-    .gv-planning .uiplanning__range .uiplanning__range-area {
-      position: absolute;
-      top: 2px;
-      bottom: 2px;
-      left: 2px;
-      right: 2px;
-      display: block;
-      opacity: .7;
-      border-radius: 8px; }
-    .gv-planning .uiplanning__range .uiplanning__range-tooltip {
-      position: absolute;
-      top: 12px;
-      left: 6px;
-      transform: translate(-100%, -100%);
-      display: none;
-      padding: 6px;
-      background-color: rgba(0, 0, 0, 0.8);
-      border-radius: 2px;
-      text-align: center;
-      line-height: 110%;
-      height: auto;
-      color: white;
-      white-space: nowrap; }
-    .gv-planning .uiplanning__range.show-tooltip .uiplanning__range-area {
-      opacity: .9; }
-    .gv-planning .uiplanning__range.show-tooltip .uiplanning__range-tooltip {
-      display: block; }
-  .gv-planning .uiplanning-row__hours, .gv-planning .uiplanning-row__hour-parts, .gv-planning .uiplanning-row__day {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 100%; }
-  .gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part, .gv-planning .uiplanning__block {
-    flex: 1 1 100px; }
-  .gv-planning .uiplanning__range, .gv-planning .planning-controls .planning-state-selector, .gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part, .gv-planning .uiplanning__day {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; }
-  .gv-planning .planning-feedback {
+.gv-planning .planning-controls .planning-state-selector, .gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part, .gv-planning .uiplanning__day, .gv-planning .uiplanning__range {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.gv-planning > div {
+  box-sizing: border-box; }
+
+.gv-planning .planning-feedback {
+  border: 1px solid lightgrey;
+  padding: 12px;
+  margin: 12px 0; }
+
+.gv-planning .planning-controls {
+  padding: 12px; }
+  .gv-planning .planning-controls .planning-state-selector {
+    position: relative;
+    display: inline-block;
+    padding: 6px 6px 6px 24px;
+    margin-left: 12px;
+    border-radius: 2px;
     border: 1px solid lightgrey;
-    padding: 12px;
-    margin: 12px 0; }
-  .gv-planning .planning-controls {
-    border: 1px solid lightgrey;
-    padding: 12px; }
-    .gv-planning .planning-controls .planning-state-selector {
-      position: relative;
-      display: inline-block;
-      padding: 6px 6px 6px 24px;
-      margin-left: 12px;
-      border-radius: 2px;
-      border: 1px solid lightgrey;
-      cursor: pointer; }
-      .gv-planning .planning-controls .planning-state-selector.active {
-        background-color: lightgrey; }
-      .gv-planning .planning-controls .planning-state-selector .bullet {
-        position: absolute;
-        top: 50%;
-        left: 6px;
-        transform: translateY(-50%);
-        content: '';
-        width: 12px;
-        height: 12px;
-        border: 1px lightgrey solid;
-        border-radius: 2px;
-        pointer-events: none; }
-  .gv-planning .planning-container {
-    border: 1px solid lightgrey;
-    border-bottom: none; }
-  .gv-planning .uiplanning-row__hours {
-    height: 30px;
-    line-height: 30px;
-    border-bottom: 1px solid lightgrey; }
-  .gv-planning .uiplanning-row__hour-parts {
-    height: 16px;
-    line-height: 16px;
-    border-bottom: 1px solid lightgrey; }
-  .gv-planning .uiplanning-row__day {
-    height: 30px;
-    line-height: 30px; }
-    .gv-planning .uiplanning-row__day:last-of-type {
-      border-bottom: 1px solid lightgrey; }
-  .gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part {
-    text-align: center;
-    cursor: pointer;
-    border-left: 1px solid lightgrey; }
-  .gv-planning .uiplanning__block {
-    position: relative; }
-    .gv-planning .uiplanning__block:before {
+    cursor: pointer; }
+    .gv-planning .planning-controls .planning-state-selector.active {
+      background-color: lightgrey; }
+    .gv-planning .planning-controls .planning-state-selector .bullet {
       position: absolute;
       top: 50%;
-      left: 50%;
-      transform: translate(-1px, -1px);
-      display: block;
+      left: 6px;
+      transform: translateY(-50%);
       content: '';
-      height: 1px;
-      width: 1px;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.3); }
-    .gv-planning .uiplanning__block.uiplanning--target-hover:after {
-      position: absolute;
-      z-index: 10;
-      width: 100%;
-      height: 100%;
-      display: block;
-      content: '';
-      background-color: rgba(0, 0, 0, 0.05); }
-    .gv-planning .uiplanning__block .uiplanning__block-content {
-      pointer-events: none;
-      position: absolute;
-      width: 100%;
-      height: calc(100% - (2 * 2px));
-      top: 2px;
-      left: 0; }
-    .gv-planning .uiplanning__block.uiplanning__block--border-left .uiplanning__block-content {
-      left: 2px;
-      width: calc(100% - 2px);
-      border-bottom-left-radius: 8px;
-      border-top-left-radius: 8px; }
-    .gv-planning .uiplanning__block.uiplanning__block--border-right .uiplanning__block-content {
-      width: calc(100% - 2px);
-      border-bottom-right-radius: 8px;
-      border-top-right-radius: 8px; }
-    .gv-planning .uiplanning__block.uiplanning__block--border-left.uiplanning__block--border-right .uiplanning__block-content {
-      width: calc(100% - (2 * 2px)); }
-  .gv-planning .uiplanning--hour-start {
-    border-left: 1px solid lightgrey; }
-  .gv-planning .uiplanning-row > div:first-child {
-    flex: 0 0 100px;
-    padding: 0 4px; }
+      width: 12px;
+      height: 12px;
+      border: 1px lightgrey solid;
+      border-radius: 2px;
+      pointer-events: none; }
+
+.gv-planning .planning-container {
+  border: 1px solid lightgrey; }
+
+.gv-planning .uiplanning-row__hours, .gv-planning .uiplanning-row__hour-parts, .gv-planning .uiplanning-row__day {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%; }
+
+.gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part, .gv-planning .uiplanning__block {
+  flex: 1 1 100px; }
+
+.gv-planning .uiplanning-row__hours {
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px solid lightgrey; }
+
+.gv-planning .uiplanning-row__hour-parts {
+  height: 16px;
+  line-height: 16px;
+  border-bottom: 1px solid lightgrey; }
+
+.gv-planning .uiplanning-row__day {
+  height: 30px;
+  line-height: 30px; }
+
+.gv-planning .uiplanning__hour, .gv-planning .uiplanning__hour-part {
+  text-align: center;
+  cursor: pointer;
+  border-left: 1px solid lightgrey; }
+
+.gv-planning .uiplanning__block {
+  position: relative; }
+  .gv-planning .uiplanning__block:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-1px, -1px);
+    display: block;
+    content: '';
+    height: 1px;
+    width: 1px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3); }
+  .gv-planning .uiplanning__block.uiplanning--target-hover:after {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.05); }
+
+.gv-planning .uiplanning-row > div:first-child {
+  flex: 0 0 100px;
+  padding: 0 4px; }
+
+.gv-planning .uiplanning--hour-start {
+  border-left: 1px solid lightgrey; }
+
+.gv-planning .uiplanning--hour-start-xl {
+  border-left: 2px solid lightgrey; }
+
+.gv-planning .uiplanning__range {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: block;
+  height: 100%;
+  pointer-events: none; }
+  .gv-planning .uiplanning__range .uiplanning__range-area {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    display: block;
+    opacity: .7;
+    border-radius: 8px; }
+  .gv-planning .uiplanning__range .uiplanning__range-tooltip {
+    position: absolute;
+    top: 12px;
+    left: 6px;
+    transform: translate(-100%, -100%);
+    display: none;
+    padding: 6px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 2px;
+    text-align: center;
+    line-height: 110%;
+    height: auto;
+    color: white;
+    white-space: nowrap; }
+  .gv-planning .uiplanning__range.show-tooltip .uiplanning__range-area {
+    opacity: .9; }
+  .gv-planning .uiplanning__range.show-tooltip .uiplanning__range-tooltip {
+    display: block; }

@@ -13,78 +13,13 @@ body{
 	$border-radius: 8px;
 	$day-height: 30px;
 	$hours-parts-height: 16px;
-	$range-hmargin: 2px;
-	$range-vmargin: 2px;
+	$range-h-margin: 2px;
+	$range-v-margin: 2px;
+	$border-inner: 1px solid lightgrey;
+	$border-inner-xl: 2px solid lightgrey;
 
-	& > div{
-		box-sizing: border-box;
-	}
+	// @todo remove after reintegration in global project
 
-	position: relative;
-
-	.uiplanning__range{
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 100;
-
-		display: block;
-		height: 100%;
- 
-		@extend %no-select;
-		pointer-events: none;
-
-		.uiplanning__range-area{
-			position: absolute;
-			top: $range-vmargin;
-			bottom: $range-vmargin;
-			left: $range-hmargin;
-			right: $range-hmargin;
-
-			display: block;
-			opacity: .7;
-			border-radius: $border-radius;
-		}
-
-		.uiplanning__range-tooltip{
-			position: absolute;
-			top: $gutter;
-			left: .5 * $gutter;
-			transform: translate(-100%, -100%);
-
-			display: none;
-
-			padding: .5 * $gutter;
-			background-color: rgba(black, .8);
-			border-radius: $uicomp-bd-radius;
-
-			text-align: center;
-			line-height: 110%;
-			height: auto;
-			color: white;
-			white-space: nowrap;
-		}
-
-
-		&.show-tooltip{
-			.uiplanning__range-area{
-				opacity: .9;
-			}
-			.uiplanning__range-tooltip{
-				display: block;
-			}
-		}
-	}
-
-	%planning-row {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		width: 100%;
-	}
-	%uiplanning {
-		flex: 1 1 100px;
-	}
 	%no-select {
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
@@ -92,16 +27,24 @@ body{
 		-ms-user-select: none;
 		user-select: none;
 	}
+	& > div{
+		box-sizing: border-box;
+	}
+
+	// --- end @todo
 
 	.planning-feedback{
-		border: 1px solid lightgrey;
+		border: $border-inner;
 		padding: $gutter;
 		margin: $gutter 0;
 	}
+
+
+	// ############################## controls
+
 	.planning-controls{
 		$state-selector-bullet-size: 12px;
 
-		border: 1px solid lightgrey;
 		padding: $gutter;
 
 		.planning-state-selector{
@@ -112,7 +55,7 @@ body{
 			margin-left: $gutter;
 
 			border-radius: 2px;
-			border: 1px solid lightgrey;
+			border: $border-inner;
 
 			cursor: pointer;
 			@extend %no-select;
@@ -137,52 +80,61 @@ body{
 			}
 		}
 	}
+
 	.planning-container{
-		border: 1px solid lightgrey;
-		border-bottom: none;
+		border: $border-inner;
+	}
+
+
+	// ############################## rows & cells
+
+	%planning-row {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		width: 100%;
+	}
+	%uiplanning-cell {
+		flex: 1 1 100px;
 	}
 
 	// --- rows
+
 	.uiplanning-row__hours{
 		@extend %planning-row;
 
 		height: $day-height;
 		line-height: $day-height;
-		border-bottom: 1px solid lightgrey;
+		border-bottom: $border-inner;
 	}
 	.uiplanning-row__hour-parts{
 		@extend %planning-row;
 
 		height: $hours-parts-height;
 		line-height: $hours-parts-height;
-		border-bottom: 1px solid lightgrey;
+		border-bottom: $border-inner;
 	}
 	.uiplanning-row__day {
 		@extend %planning-row;
-
 		height: $day-height;
 		line-height: $day-height;
-
-		&:last-of-type{
-			border-bottom: 1px solid lightgrey;
-		}
 	}
 
 
 	// --- cells
 
 	.uiplanning__hour, .uiplanning__hour-part {
-		@extend %uiplanning;
+		@extend %uiplanning-cell;
 		@extend %no-select;
 		text-align: center;
 		cursor: pointer;
-		border-left: 1px solid lightgrey;
+		border-left: $border-inner;
 	}
 	.uiplanning__day{
 		@extend %no-select;
 	}
 	.uiplanning__block {
-		@extend %uiplanning;
+		@extend %uiplanning-cell;
 		position: relative;
 
 		&:before {
@@ -213,45 +165,74 @@ body{
 				background-color: rgba(black, .05);
 			}
 		}
-
-		.uiplanning__block-content{
-			pointer-events: none;
-			position: absolute;
-			width: 100%;
-			height: calc(100% - (2 * #{$range-vmargin}));
-			top: $range-vmargin;
-			left: 0;
-
-		}
-		&.uiplanning__block--border-left {
-			.uiplanning__block-content{
-				left: $range-hmargin;
-				width: calc(100% - #{$range-hmargin});
-				border-bottom-left-radius: $border-radius;
-				border-top-left-radius: $border-radius;
-			}
-		}
-		&.uiplanning__block--border-right {
-			.uiplanning__block-content {
-				width: calc(100% - #{$range-hmargin});
-				border-bottom-right-radius: $border-radius;
-				border-top-right-radius: $border-radius;
-			}
-		}
-		&.uiplanning__block--border-left.uiplanning__block--border-right{
-			.uiplanning__block-content {
-				width: calc(100% - (2 * #{$range-hmargin}));
-			}
-		}
 	}
 
-
-	.uiplanning--hour-start{
-		border-left: 1px solid lightgrey;
-	}
 	.uiplanning-row > div:first-child{
 		flex: 0 0 100px;
 		padding: 0 4px;
+	}
+
+	.uiplanning--hour-start{
+		border-left: $border-inner;
+	}
+	.uiplanning--hour-start-xl{
+		border-left: $border-inner-xl;
+	}
+
+
+	// ############################## ranges
+
+	.uiplanning__range{
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+
+		display: block;
+		height: 100%;
+
+		@extend %no-select;
+		pointer-events: none;
+
+		.uiplanning__range-area{
+			position: absolute;
+			top: $range-v-margin;
+			bottom: $range-v-margin;
+			left: $range-h-margin;
+			right: $range-h-margin;
+
+			display: block;
+			opacity: .7;
+			border-radius: $border-radius;
+		}
+
+		.uiplanning__range-tooltip{
+			position: absolute;
+			top: $gutter;
+			left: .5 * $gutter;
+			transform: translate(-100%, -100%);
+
+			display: none;
+
+			padding: .5 * $gutter;
+			background-color: rgba(black, .8);
+			border-radius: $uicomp-bd-radius;
+
+			text-align: center;
+			line-height: 110%;
+			height: auto;
+			color: white;
+			white-space: nowrap;
+		}
+
+		&.show-tooltip{
+			.uiplanning__range-area{
+				opacity: .9;
+			}
+			.uiplanning__range-tooltip{
+				display: block;
+			}
+		}
 	}
 }
 

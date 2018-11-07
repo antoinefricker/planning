@@ -18,24 +18,21 @@
 
 	<div class="planning-container"></div>
 
-	<div class="planning-feedback"></div>
-
 	<div class="planning-controls">
-
 		<label class="controls-info">Sélectionnez un état pour éditer le planning</label>
 		<span class="controls-selectors"></span>
 		<br />
-
-		<button id="planning-restore" class="btn uicomp-red">Restaurer</button>
-		<button id="planning-export" class="btn uicomp-green">Exporter</button>
 	</div>
 </div>
 
+<button id="planning-restore" class="btn uicomp-red">Restaurer</button>
+<button id="planning-export" class="btn uicomp-green">Exporter</button>
+
+<div class="planning-feedback"></div>
+
 <script>
 
-
-
-	new UIPlanning('#planning', {
+	var planning = new UIPlanning('#planning', {
 		states: [
 			{
 				uid: '',
@@ -56,6 +53,15 @@
 		stateDefault: '',
 		planning: [[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"20:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"},{"s":"occupation","start":"15:00","end":"18:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}],[{"s":"vacances","start":"00:00","end":"05:59"},{"s":"occupation","start":"06:00","end":"12:59"}]],
 	});
+
+	$('#planning-restore').on('click', function(){
+		planning.model_restore();
+	});
+
+	$('#planning-export').on('click', function(){
+		planning.model_export();
+	});
+
 </script>
 
 </body>

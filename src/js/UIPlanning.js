@@ -29,11 +29,8 @@ var UIPlanning = function (selector, options) {
 		ux_rowHover: this.ux_rowHover.bind(this),
 		ux_blockState: this.ux_blockState.bind(this),
 		ux_blockStateMouseState: this.ux_blockStateMouseState.bind(this),
-		model_export: this.model_export.bind(this),
-		model_restore: this.model_restore.bind(this)
 	};
-
-
+	
 	// ############## init
 
 	this.dom_build();
@@ -54,7 +51,6 @@ var UIPlanning = function (selector, options) {
 		this.model_setState(this._options.stateDefault);
 		this.dom_setBlocksState(this._allBlocks, this._state);
 	}
-
 
 	this._rangesRenderLock = false;
 	this.dom_renderRanges();
@@ -84,8 +80,6 @@ UIPlanning.prototype.ux_interactions = function () {
 
 	this._controlsEl
 		.on('click', '.planning-state-selector', this._callbacks.model_setState)
-		.on('click', '#planning-export', this._callbacks.model_export)
-		.on('click', '#planning-restore', this._callbacks.model_restore)
 	;
 };
 UIPlanning.prototype.ux_displayError = function (message) {
@@ -262,8 +256,13 @@ UIPlanning.prototype.dom_build = function () {
 	str += '<div></div>';
 	for (iHour = 0; iHour < iHourLen; iHour++) {
 		iHourMod = iHour % this._options.hourParts;
-		if (iHourMod === 0)
-			str += '<div class="uiplanning__hour">' + Math.ceil(iHour / this._options.hourParts) + 'h';
+		if (iHourMod === 0) {
+			str += '<div class="uiplanning__hour';
+			if(iHour > 0 && (iHour / this._options.hourParts) % 6 == 0){
+				str += ' uiplanning--hour-start-xl';
+			}
+			str += '">' + Math.ceil(iHour / this._options.hourParts) + 'h';
+		}
 		else if (iHourMod === (this._options.hourParts - 1))
 			str += '</div>';
 	}
@@ -273,7 +272,11 @@ UIPlanning.prototype.dom_build = function () {
 	str += '<div class="uiplanning-row uiplanning-row__hour-parts">';
 	str += '<div></div>';
 	for (iHour = 0; iHour < iHourLen; iHour++) {
-		str += '<div class="uiplanning__hour-part"></div>';
+		str += '<div class="uiplanning__hour-part';
+		if(iHour > 0 && (iHour / this._options.hourParts) % 6 == 0){
+			str += ' uiplanning--hour-start-xl';
+		}
+		str += '"></div>';
 	}
 	str += '</div>';
 
@@ -283,14 +286,11 @@ UIPlanning.prototype.dom_build = function () {
 		str += '<div class="uiplanning-row uiplanning-row__day">';
 		str += '<div class="uiplanning__day">' + this._options.dayNames[iDay] + '</div>';
 		for (iHour = 0; iHour < iHourLen; iHour++) {
-			iHourMod = iHour % this._options.hourParts;
 			classes = 'uiplanning__block';
-			if (iHourMod === 0) {
-				classes += ' uiplanning--hour-start';
+			if (iHour % this._options.hourParts === 0) {
+				classes += (iHour > 0 && ((iHour / this._options.hourParts) % 6 == 0)) ? ' uiplanning--hour-start-xl' : ' uiplanning--hour-start';
 			}
-			str += '<div class="' + classes + '">'
-				+ '<div class="uiplanning__block-content"></div>'
-				+ '</div>';
+			str += '<div class="' + classes + '"></div>';
 		}
 		str += '</div>';
 	}
