@@ -1,4 +1,1 @@
-gulp/node_modules/**
-.idea/tasks.xml
-.idea/workspace.xml
-.idea/workspace.xml
+./gulp/node_modules/**

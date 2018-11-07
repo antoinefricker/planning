@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9be7a2f5-01e0-47d1-b1ea-14a089a7348a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/css/default.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/css/default.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/js/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/js/map/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/map/bundle.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/js/sources/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/js/sources/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/UIPlanning.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/UIPlanning.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/main.scss" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +30,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="css" value="7" />
-          <entry key="gitignore" value="2" />
+          <entry key="gitignore" value="3" />
           <entry key="html" value="4" />
           <entry key="js" value="14" />
           <entry key="scss" value="6" />
@@ -46,7 +43,7 @@
           <entry key="CSS" value="7" />
           <entry key="HTML" value="4" />
           <entry key="JavaScript" value="14" />
-          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="PLAIN_TEXT" value="3" />
           <entry key="SCSS" value="6" />
           <entry key="TypeScript" value="1" />
           <entry key="YAML" value="6" />
@@ -55,7 +52,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="6" />
-          <entry key="gitignore" value="2" />
+          <entry key="gitignore" value="4" />
           <entry key="html" value="926" />
           <entry key="js" value="12760" />
           <entry key="scss" value="3643" />
@@ -67,7 +64,7 @@
           <entry key="CSS" value="6" />
           <entry key="HTML" value="926" />
           <entry key="JavaScript" value="12760" />
-          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="PLAIN_TEXT" value="4" />
           <entry key="SCSS" value="3643" />
           <entry key="YAML" value="71" />
         </counts>
@@ -76,14 +73,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="232">
-              <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+              <caret line="167" selection-start-line="32" selection-end-line="167" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="22" selection-start-column="22" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -137,7 +143,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>date</find>
       <find>start</find>
       <find>uiplanning__day</find>
       <find>uiplanning__hours-part</find>
@@ -167,6 +172,7 @@
       <find>uiplanning__block-content</find>
       <find>planning-controls</find>
       <find>#</find>
+      <find>cks.model_res</find>
     </findStrings>
     <replaceStrings>
       <replace>uiplanning-row</replace>
@@ -200,10 +206,10 @@
         <option value="$PROJECT_DIR$/_sources/tooltipster-master/tooltipster-master/dist/css/tooltipster-sideTip-light.min.css" />
         <option value="$PROJECT_DIR$/src/js/tippy.js" />
         <option value="$PROJECT_DIR$/gulp/gulpconfig.yaml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/sass/main.scss" />
         <option value="$PROJECT_DIR$/dist/index.html" />
         <option value="$PROJECT_DIR$/src/js/UIPlanning.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -389,12 +395,12 @@
       <workItem from="1541431975107" duration="6190000" />
       <workItem from="1541492470783" duration="23104000" />
       <workItem from="1541580042931" duration="511000" />
-      <workItem from="1541584240991" duration="3082000" />
+      <workItem from="1541584240991" duration="3295000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69401000" />
+    <option name="totallyTimeSpent" value="69614000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1216" extended-state="6" />
@@ -519,20 +525,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/UIPlanning.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
-          <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
+          <caret line="167" selection-start-line="32" selection-end-line="167" />
           <folding>
             <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="22" selection-start-column="22" selection-end-column="22" />
         </state>
       </provider>
     </entry>
