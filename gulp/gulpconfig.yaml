@@ -36,7 +36,6 @@ CONFIG:
          -  name: 'bundle'
             enabled: true
             concat:
-               - '../src/js/tippy.js'
                - '../src/js/UIPlanning.js'
             into: 'bundle.js'
 
