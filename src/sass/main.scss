@@ -29,23 +29,47 @@ body{
 		z-index: 100;
 
 		display: block;
-		height: 50%;
-
+		height: 100%;
+ 
 		@extend %no-select;
 		pointer-events: none;
-		cursor: pointer;
 
-		background-color: rgba(red, .2);
+		.uiplanning__range-area{
+			position: absolute;
+			top: $range-vmargin;
+			bottom: $range-vmargin;
+			left: $range-hmargin;
+			right: $range-hmargin;
+
+			display: block;
+			opacity: .7;
+			border-radius: $border-radius;
+		}
+
 		.uiplanning__range-tooltip{
 			position: absolute;
-			top: -50%;
-			left: 50%;
-			transform: translate(-50%, -100%);
+			top: $gutter;
+			left: .5 * $gutter;
+			transform: translate(-100%, -100%);
 
 			display: none;
+
+			padding: .5 * $gutter;
+			background-color: rgba(black, .8);
+			border-radius: $uicomp-bd-radius;
+
+			text-align: center;
+			line-height: 110%;
+			height: auto;
+			color: white;
+			white-space: nowrap;
 		}
+
+
 		&.show-tooltip{
-			background-color: rgba(red, .8);
+			.uiplanning__range-area{
+				opacity: .9;
+			}
 			.uiplanning__range-tooltip{
 				display: block;
 			}

@@ -179,17 +179,7 @@ UIPlanning.prototype.dom_setBlocksState = function (blocks, state) {
 		return;
 	}
 
-	if (state) {
-		blocks
-			.attr('data-state', state.uid)
-			.find('.uiplanning__block-content')
-			.css('background-color', state.color);
-	}
-	else {
-		blocks
-			.attr('data-state', null)
-			.attr('style', null);
-	}
+	blocks.attr('data-state', state ? state.uid : null);
 
 	// render is lock --> skip render
 	if (!this._rangesRenderLock) {
@@ -198,32 +188,36 @@ UIPlanning.prototype.dom_setBlocksState = function (blocks, state) {
 };
 UIPlanning.prototype.dom_renderRanges = function () {
 	var self = this,
+		str,
 		ranges, iRange, iRangeLen, range;
 
 	// --- clear former state
-	this._allBlocks
-		.removeClass('uiplanning__block--border-left')
-		.removeClass('uiplanning__block--border-right');
 	this._containerEl.find('.uiplanning__range').remove();
 
 	ranges = this.model_retrieveRanges().ranges;
-
 	for (iRange = 0, iRangeLen = ranges.length; iRange < iRangeLen; ++iRange) {
 		range = ranges[iRange];
 
-		// --- add round corner
-		range.startBlock.addClass('uiplanning__block--border-left');
-		range.endBlock.addClass('uiplanning__block--border-right');
-
 		// --- create tooltip instance
-		range.tipEl = $('<div class="uiplanning__range"><div class="uiplanning__range-tooltip">' + range.start + ' - ' + range.end + '</div></div>')
+		str = '';
+		str += '<div class="uiplanning__range">';
+		str += '<div class="uiplanning__range-area"></div>';
+		str += '<div class="uiplanning__range-tooltip">' + range.start + ' - ' + range.end + '</div>';
+		str += '</div>';
+		range.tipEl = $(str);
+
+		range.tipEl
 			.css({
 				width: range.endBlock.offset().left - range.startBlock.offset().left + range.startBlock.width()
 			})
-			.appendTo(range.startBlock);
+			.appendTo(range.startBlock)
+			.find('.uiplanning__range-area')
+				.css({
+					'background-color': range.state.color,
+				});
 
 		(function(range){
-			for(var a = range.startIndex; a < range.endIndex; a++){
+			for(var a = range.startIndex; a <= range.endIndex; a++){
 				self._cells[range.day][a]
 					.on('mouseover', function(){
 						range.tipEl.addClass('show-tooltip');
@@ -406,6 +400,7 @@ UIPlanning.prototype.model_retrieveRanges = function () {
 			if (!outRange) {
 				outRange = {
 					s: block.attr('data-state'),
+					state: this.model_retrieveState(block.attr('data-state')),
 					day: iRow,
 					start: this._convertIndexToHour(iBlock, false),
 					startIndex: iBlock,
@@ -423,6 +418,7 @@ UIPlanning.prototype.model_retrieveRanges = function () {
 
 				outRange = {
 					s: block.attr('data-state'),
+					state: this.model_retrieveState(block.attr('data-state')),
 					day: iRow,
 					start: this._convertIndexToHour(iBlock, false),
 					startIndex: iBlock,
