@@ -33,6 +33,7 @@ var GVPlanning = function (selector, options) {
 		ux_rowHover: this.ux_rowHover.bind(this),
 		ux_blockState: this.ux_blockState.bind(this),
 		ux_blockStateWatch: this.ux_blockStateWatch.bind(this),
+		dom_renderRanges: this.dom_renderRanges.bind(this),
 	};
 
 	this._state = null;
@@ -79,6 +80,8 @@ var GVPlanning = function (selector, options) {
 	this._controlsEl
 		.on('click', '.gvp-state-selector', this._cbs.model_setState)
 	;
+
+	$(window).on('resize', this._cbs.dom_renderRanges)
 
 
 	// --- if a configuration is set ==> display it
